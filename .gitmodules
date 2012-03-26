@@ -1,0 +1,3 @@
+[submodule "module/DBIx-MoCo"]
+	path = module/DBIx-MoCo
+	url = git://github.com/hatena/DBIx-MoCo.git
