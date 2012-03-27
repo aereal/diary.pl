@@ -28,4 +28,13 @@ subtest schema => sub {
     is_deeply [sort @{$schema->columns}], [sort qw/id name created_at/];
 };
 
+subtest created_at => sub {
+    subtest inflation => sub {
+        subtest 'created_at is 0000-00-00 00:00:00' => sub {
+            my $user = InternDiary::MoCo::User->create(name => 'yuno', created_at => '0000-00-00 00:00:00');
+            is $user->created_at, undef;
+        };
+    };
+};
+
 done_testing;
