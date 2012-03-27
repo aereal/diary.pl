@@ -45,6 +45,13 @@ subtest current_user => sub {
     };
 };
 
+subtest create_entry => sub {
+    my $app = $App->new;
+    can_ok $app, 'create_entry';
+
+    my $before_entries_count = $Entry->count;
+};
+
 subtest login => sub {
     reflesh_table;
 

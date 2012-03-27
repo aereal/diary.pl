@@ -30,4 +30,8 @@ sub login {
         die 'Given name is not found';
 }
 
+sub create_entry {
+    my ($self, $args) = @_;
+}
+
 1;
