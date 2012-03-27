@@ -1,0 +1,7 @@
+#!/bin/sh
+mysql -uroot -e 'DROP DATABASE IF EXISTS intern_diary_aereal'
+mysql -uroot -e 'DROP DATABASE IF EXISTS intern_diary_aereal_test'
+mysql -uroot -e 'CREATE DATABASE intern_diary_aereal'
+mysql -uroot -e 'CREATE DATABASE intern_diary_aereal_test'
+mysql -uroot intern_diary_aereal < db/schema.sql
+mysql -uroot intern_diary_aereal_test < db/schema.sql
