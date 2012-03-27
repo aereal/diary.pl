@@ -40,6 +40,12 @@ subtest created_at => sub {
             isa_ok $user->created_at, 'DateTime';
             is $user->created_at->epoch, DateTime->new(year => 1992, month => 05, day => 05)->epoch;
         };
+
+        subtest 'created_at is 1992-10-10 06:30:00' => sub {
+            my $user = InternDiary::MoCo::User->create(name => 'miyako', created_at => '1992-10-10 00:00:00');
+            isa_ok $user->created_at, 'DateTime';
+            is $user->created_at->epoch, DateTime->new(year => 1992, month => 10, day => 10)->epoch;
+        };
     };
 };
 
