@@ -12,4 +12,9 @@ sub create_entry {
     InternDiary::MoCo::Entry->create((%$args, (user_id => $self->id)));
 }
 
+sub entries {
+    my ($self) = @_;
+    InternDiary::MoCo::Entry->search(where => {user_id => $self->id}, order => 'created_at DESC');
+}
+
 1;

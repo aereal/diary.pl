@@ -90,4 +90,19 @@ subtest create_entry => sub {
     is $Entry->count(user_id => $author->id), $before_entries_count + 1;
 };
 
+subtest entries => sub {
+    reflesh_table;
+    my $author = $User->create(name => 'aereal');
+
+    can_ok $author, 'entries';
+    isa_ok $author->entries, 'DBIx::MoCo::List';
+    ok $author->entries->is_empty;
+
+    my $first_entry_args = {title => 'Hello World', body => 'shut the fuck up and write some diary'};
+    $author->create_entry($first_entry_args);
+
+    ok not $author->entries->is_deeply;
+    ok defined $author->entries->find(sub { $_->title eq $first_entry_args->{'title'} && $_->body eq $first_entry_args->{'body'} });
+};
+
 done_testing;
