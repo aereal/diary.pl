@@ -14,4 +14,8 @@ subtest inheritance => sub {
     ok any { $_ eq 'InternDiary::MoCo' } @InternDiary::MoCo::User::ISA;
 };
 
+subtest table => sub {
+    is 'InternDiary::MoCo::User'->table, 'users';
+};
+
 done_testing;
