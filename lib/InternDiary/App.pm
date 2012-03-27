@@ -3,11 +3,14 @@ use strict;
 use warnings;
 use InternDiary::MoCo::User;
 use Try::Tiny;
-use Carp;
 
 sub new {
     my ($class) = @_;
     bless {}, $class;
+}
+
+sub current_user {
+    InternDiary::MoCo::User->search->first;
 }
 
 sub register {

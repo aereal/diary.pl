@@ -26,6 +26,25 @@ subtest initialize => sub {
     new_ok $App;
 };
 
+subtest current_user => sub {
+    my $app = $App->new;
+    can_ok $app, 'current_user';
+
+    subtest 'no users registered' => sub {
+        reflesh_table;
+
+        is $app->current_user, undef;
+    };
+
+    subtest 'any users registered' => sub {
+        reflesh_table;
+
+        my $last_user = $User->create(name => 'aereal');
+        isa_ok $app->current_user, $User;
+        is $app->current_user->name, $last_user->name;
+    };
+};
+
 subtest login => sub {
     reflesh_table;
 
