@@ -37,4 +37,15 @@ __PACKAGE__->add_trigger(
     }
 );
 
+__PACKAGE__->add_trigger(
+    before_update => sub {
+        my ($class, $self, $args) = @_;
+        for my $column (qw/updated_at/){
+            if ($class->has_column($column) && !defined $args->{$column}) {
+                $args->{$column} = DateTime->now(time_zone => 'UTC', formatter => 'DateTime::Format::MySQL');
+            }
+        }
+    }
+);
+
 1;

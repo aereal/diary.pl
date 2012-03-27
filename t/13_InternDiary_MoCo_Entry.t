@@ -137,6 +137,22 @@ subtest updated_at => sub {
             isa_ok $empty_upts_entry->updated_at, 'DateTime';
             is $empty_upts_entry->updated_at->epoch, DateTime->now->epoch;
         };
+
+        subtest 'when object is updated' => sub {
+            reflesh_table;
+            my $old_ts = DateTime->new(year => 2011, month => 4, day => 1, time_zone => 'UTC', formatter => 'DateTime::Format::MySQL');
+            my $updated_entry = $Entry->create(
+                title => 'updated_at is',
+                body => 'empty dayo ~',
+                created_at => $old_ts,
+                updated_at => $old_ts,
+                user_id => $author->id);
+            mock_guard 'DateTime', {
+                now => sub { DateTime->new(year => 2012, month => 4, day => 1, time_zone => 'UTC', formatter => 'DateTime::Format::MySQL') }};
+            $updated_entry->body($updated_entry->body . 'dayo ~');
+            isa_ok $updated_entry->updated_at, 'DateTime';
+            is $updated_entry->updated_at->epoch, DateTime->now->epoch;
+        };
     };
 };
 
