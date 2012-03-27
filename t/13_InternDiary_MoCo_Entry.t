@@ -21,4 +21,10 @@ subtest table => sub {
     is $Entry->table, 'entries';
 };
 
+subtest schema => sub {
+    my $schema = $Entry->schema;
+    is_deeply [sort @{$schema->primary_keys}], [sort qw/id/];
+    is_deeply [sort @{$schema->columns}], [sort qw/id title body created_at updated_at user_id/];
+};
+
 done_testing;
