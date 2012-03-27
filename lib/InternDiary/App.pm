@@ -23,7 +23,8 @@ sub register {
 sub login {
     my ($self, $name) = @_;
     die 'No username given' unless defined $name;
-    die 'Given name is not found';
+    InternDiary::MoCo::User->find(name => $name) or
+        die 'Given name is not found';
 }
 
 1;

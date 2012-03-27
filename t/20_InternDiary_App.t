@@ -43,6 +43,17 @@ subtest login => sub {
             my $missing_name = 'missreal';
             like exception { $app->login($missing_name) }, qr/Given name is not found/;
         };
+
+        subtest 'it is already taken' => sub {
+            reflesh_table;
+
+            my $name = 'aereal';
+            $User->create(name => $name);
+
+            my $result = $app->login($name);
+            isa_ok $result, $User;
+            is $result->name, $name;
+        };
     };
 };
 
