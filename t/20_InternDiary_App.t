@@ -35,6 +35,15 @@ subtest login => sub {
     subtest 'no args given' => sub {
         like exception { $app->login }, qr/No username given/;
     };
+
+    subtest 'username given' => sub {
+        subtest 'it is not registered yet' => sub {
+            reflesh_table;
+
+            my $missing_name = 'missreal';
+            like exception { $app->login($missing_name) }, qr/Given name is not found/;
+        };
+    };
 };
 
 subtest register => sub {
