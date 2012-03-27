@@ -7,6 +7,9 @@ use Test::Name::FromLine;
 use Test::Fatal;
 
 use InternDiary::Database;
+use DBIx::RewriteDSN -rules => q/
+    dbi:mysql:dbname=intern_diary_aereal dbi:mysql:dbname=intern_diary_aereal_test
+/;
 
 my $DB = 'InternDiary::Database';
 
