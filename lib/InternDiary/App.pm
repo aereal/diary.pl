@@ -2,6 +2,7 @@ package InternDiary::App;
 use strict;
 use warnings;
 use InternDiary::MoCo::User;
+use InternDiary::MoCo::Entry;
 use Try::Tiny;
 
 sub new {
@@ -31,7 +32,10 @@ sub login {
 }
 
 sub create_entry {
-    my ($self, $args) = @_;
+    my ($self, $complexed) = @_;
+    my ($title, @rest) = split "\n", $complexed;
+    my $body = join "\n", @rest;
+    $self->current_user->create_entry({title => $title, body => $body});
 }
 
 1;

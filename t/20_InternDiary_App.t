@@ -46,10 +46,23 @@ subtest current_user => sub {
 };
 
 subtest create_entry => sub {
+    reflesh_table;
+
+    my $user = $User->create(name => 'aereal');
+
     my $app = $App->new;
     can_ok $app, 'create_entry';
 
-    my $before_entries_count = $Entry->count;
+    my $title = 'This is my title';
+    my $body = "Hello World\nThese lines are body";
+    my $complexed = join "\n", ($title, $body);
+
+    $app->create_entry($complexed);
+
+    my $last_my_entry = $Entry->search(where => {user_id => $user->id}, order => 'created_at DESC', limit => 1)->first;
+    isa_ok $last_my_entry, $Entry;
+    is $last_my_entry->title, $title;
+    is $last_my_entry->body, $body;
 };
 
 subtest login => sub {
