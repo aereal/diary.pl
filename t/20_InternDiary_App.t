@@ -7,7 +7,7 @@ use Test::Fatal;
 use List::MoreUtils ':all';
 use Data::Dumper;
 use Test::Mock::Guard qw/mock_guard/;
-use Test::Fatal qw/exception lives_ok/;
+use Test::Fatal qw/exception lives_ok dies_ok/;
 
 use InternDiary::Database;
 use InternDiary::MoCo::Entry;
@@ -49,6 +49,15 @@ subtest register => sub {
             my $last_user = $User->search(order => 'created_at DESC', limit => 1)->first;
             isa_ok $last_user, $User;
             is $last_user->name, $new_username;
+        };
+
+        subtest 'it is already registered' => sub {
+            reflesh_table;
+
+            my $earlier_user = $User->create(name => 'earliereal');
+            my $duplicated_name = $earlier_user->name;
+
+            like exception { $app->register($duplicated_name) }, qr/Given name is already taken/;
         };
     };
 };
