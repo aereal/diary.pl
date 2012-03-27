@@ -10,6 +10,9 @@ __PACKAGE__->inflate_column(
         inflate => sub {
             $_[0] && $_[0] ne '0000-00-00 00:00:00' ? DateTime::Format::MySQL->parse_datetime($_[0]) : ();
         },
+        deflate => sub {
+            DateTime::Format::MySQL->format_datetime(shift);
+        },
     },
 );
 
