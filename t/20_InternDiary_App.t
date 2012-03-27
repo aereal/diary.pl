@@ -26,6 +26,17 @@ subtest initialize => sub {
     new_ok $App;
 };
 
+subtest login => sub {
+    reflesh_table;
+
+    my $app = $App->new;
+    can_ok $app, 'login';
+
+    subtest 'no args given' => sub {
+        like exception { $app->login }, qr/No username given/;
+    };
+};
+
 subtest register => sub {
     reflesh_table;
 

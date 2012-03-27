@@ -20,4 +20,9 @@ sub register {
     };
 }
 
+sub login {
+    my ($self, $name) = @_;
+    die 'No username given' unless defined $name;
+}
+
 1;
