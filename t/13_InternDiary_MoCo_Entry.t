@@ -156,4 +156,17 @@ subtest updated_at => sub {
     };
 };
 
+subtest author => sub {
+    reflesh_table;
+
+    my $author = $User->create(name => 'yuno');
+    my $entry = $Entry->create(title => 'Hajimete no Nikki', body => 'Ma, Taitei nanndemo shitte-masu kedo!', user_id => $author->id);
+
+    can_ok $entry, 'author';
+    isa_ok $entry->author, $User;
+    for (@{$User->columns}) {
+        is $author->$_, $entry->author->$_, $_;
+    }
+};
+
 done_testing;
