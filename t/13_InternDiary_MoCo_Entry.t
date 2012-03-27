@@ -64,4 +64,39 @@ subtest created_at => sub {
     };
 };
 
+subtest updated_at => sub {
+    my $author = $User->create(name => 'Entry Author Dayo (updated)');
+
+    subtest inflation => sub {
+        subtest 'is 0000-00-00 00:00:00' => sub {
+            my $entry = $Entry->create(
+                title => 'Sketch Switch',
+                body => 'Donna Iro ga Ima desu-ka?',
+                user_id => $author->id,
+                updated_at => '0000-00-00 00:00:00');
+            is $entry->updated_at, undef;
+        };
+
+        subtest 'is 1991-06-15 03:25:00' => sub {
+            my $entry = $Entry->create(
+                title => 'Sketch Switch',
+                body => 'Donna Iro ga Ima desu-ka?',
+                user_id => $author->id,
+                updated_at => '1991-06-15 03:25:00');
+            isa_ok $entry->updated_at, 'DateTime';
+            is $entry->updated_at->epoch, DateTime->new(year => 1991, month => 6, day => 15, hour => 3, minute => 25)->epoch;
+        };
+
+        subtest 'is 1992-10-10 06:30:00' => sub {
+            my $entry = $Entry->create(
+                title => 'Sketch Switch',
+                body => 'Donna Iro ga Ima desu-ka?',
+                user_id => $author->id,
+                updated_at => '1992-10-10 06:30:00');
+            isa_ok $entry->updated_at, 'DateTime';
+            is $entry->updated_at->epoch, DateTime->new(year => 1992, month => 10, day => 10, hour => 6, minute => 30)->epoch;
+        };
+    };
+};
+
 done_testing;
