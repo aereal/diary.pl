@@ -4,6 +4,7 @@ use warnings;
 use FindBin;
 use lib glob "$FindBin::Bin/../module/*/lib";
 use parent 'DBIx::MoCo';
+use DateTime::Format::MySQL;
 
 __PACKAGE__->db_object('InternDiary::Database');
 __PACKAGE__->inflate_column(
@@ -23,6 +24,17 @@ __PACKAGE__->inflate_column(
             DateTime::Format::MySQL->format_datetime(shift);
         },
     },
+);
+
+__PACKAGE__->add_trigger(
+    before_create => sub {
+        my ($class, $args) = @_;
+        for my $column (qw/created_at updated_at/){
+            if ($class->has_column($column) && !defined $args->{$column}) {
+                $args->{$column} = DateTime->now(time_zone => 'UTC', formatter => 'DateTime::Format::MySQL');
+            }
+        }
+    }
 );
 
 1;

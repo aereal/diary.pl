@@ -7,6 +7,7 @@ use Test::Name::FromLine;
 use Test::Fatal;
 use List::MoreUtils ':all';
 use Data::Dumper;
+use Test::Mock::Guard qw/mock_guard/;
 
 use InternDiary::Database;
 use InternDiary::MoCo::Entry;
@@ -70,6 +71,20 @@ subtest created_at => sub {
             is $entry->created_at->epoch, DateTime->new(year => 1992, month => 10, day => 10, hour => 6, minute => 30)->epoch;
         };
     };
+
+    subtest set_current_time => sub {
+        subtest 'when created_at is not given' => sub {
+            mock_guard 'DateTime', {
+                now => sub { DateTime->new(year => 2012, month => 4, day => 1, time_zone => 'UTC', formatter => 'DateTime::Format::MySQL') }};
+            reflesh_table;
+            my $empty_ts_entry = $Entry->create(
+                title => 'created_at is',
+                body => 'empty dayo ~',
+                user_id => $author->id);
+            isa_ok $empty_ts_entry->created_at, 'DateTime';
+            is $empty_ts_entry->created_at->epoch, DateTime->now->epoch;
+        };
+    };
 };
 
 subtest updated_at => sub {
@@ -107,6 +122,20 @@ subtest updated_at => sub {
                 updated_at => '1992-10-10 06:30:00');
             isa_ok $entry->updated_at, 'DateTime';
             is $entry->updated_at->epoch, DateTime->new(year => 1992, month => 10, day => 10, hour => 6, minute => 30)->epoch;
+        };
+    };
+
+    subtest set_current_time => sub {
+        subtest 'when updated_at is not given' => sub {
+            mock_guard 'DateTime', {
+                now => sub { DateTime->new(year => 2012, month => 4, day => 1, time_zone => 'UTC', formatter => 'DateTime::Format::MySQL') }};
+            reflesh_table;
+            my $empty_upts_entry = $Entry->create(
+                title => 'updated_at is',
+                body => 'empty dayo ~',
+                user_id => $author->id);
+            isa_ok $empty_upts_entry->updated_at, 'DateTime';
+            is $empty_upts_entry->updated_at->epoch, DateTime->now->epoch;
         };
     };
 };

@@ -7,6 +7,7 @@ use Test::Fatal;
 use List::MoreUtils ':all';
 use Data::Dumper;
 use DateTime;
+use Test::Mock::Guard qw/mock_guard/;
 
 use InternDiary::Database;
 use InternDiary::MoCo::User;
@@ -54,6 +55,17 @@ subtest created_at => sub {
             my $user = InternDiary::MoCo::User->create(name => 'miyako', created_at => '1992-10-10 00:00:00');
             isa_ok $user->created_at, 'DateTime';
             is $user->created_at->epoch, DateTime->new(year => 1992, month => 10, day => 10)->epoch;
+        };
+    };
+
+    subtest set_current_time => sub {
+        subtest 'when created_at is not given' => sub {
+            mock_guard 'DateTime', {
+                now => sub { DateTime->new(year => 2012, month => 4, day => 1, time_zone => 'UTC', formatter => 'DateTime::Format::MySQL') }};
+            reflesh_table;
+            my $new_user = $User->create(name => 'hogereal');
+            isa_ok $new_user->created_at, 'DateTime';
+            is $new_user->created_at->epoch, DateTime->now->epoch;
         };
     };
 };
