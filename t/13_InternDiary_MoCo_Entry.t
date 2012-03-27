@@ -15,6 +15,10 @@ use InternDiary::MoCo::User;
 my $Entry = 'InternDiary::MoCo::Entry';
 my $User = 'InternDiary::MoCo::User';
 
+sub reflesh_table {
+    InternDiary::Database->execute("TRUNCATE TABLE " . $_->table) for (($Entry, $User));
+}
+
 subtest inheritance => sub {
     ok any { $_ eq 'InternDiary::MoCo' } @InternDiary::MoCo::Entry::ISA;
 };
@@ -30,10 +34,12 @@ subtest schema => sub {
 };
 
 subtest created_at => sub {
+    reflesh_table;
     my $author = $User->create(name => 'Entry Author Dayo');
 
     subtest inflation => sub {
         subtest 'created_at is 0000-00-00 00:00:00' => sub {
+            reflesh_table;
             my $entry = $Entry->create(
                 title => 'Sketch Switch',
                 body => 'Donna Iro ga Ima desu-ka?',
@@ -43,6 +49,7 @@ subtest created_at => sub {
         };
 
         subtest 'created_at is 1991-06-15 03:25:00' => sub {
+            reflesh_table;
             my $entry = $Entry->create(
                 title => 'Sketch Switch',
                 body => 'Donna Iro ga Ima desu-ka?',
@@ -53,6 +60,7 @@ subtest created_at => sub {
         };
 
         subtest 'created_at is 1992-10-10 06:30:00' => sub {
+            reflesh_table;
             my $entry = $Entry->create(
                 title => 'Sketch Switch',
                 body => 'Donna Iro ga Ima desu-ka?',
@@ -65,10 +73,12 @@ subtest created_at => sub {
 };
 
 subtest updated_at => sub {
+    reflesh_table;
     my $author = $User->create(name => 'Entry Author Dayo (updated)');
 
     subtest inflation => sub {
         subtest 'is 0000-00-00 00:00:00' => sub {
+            reflesh_table;
             my $entry = $Entry->create(
                 title => 'Sketch Switch',
                 body => 'Donna Iro ga Ima desu-ka?',
@@ -78,6 +88,7 @@ subtest updated_at => sub {
         };
 
         subtest 'is 1991-06-15 03:25:00' => sub {
+            reflesh_table;
             my $entry = $Entry->create(
                 title => 'Sketch Switch',
                 body => 'Donna Iro ga Ima desu-ka?',
@@ -88,6 +99,7 @@ subtest updated_at => sub {
         };
 
         subtest 'is 1992-10-10 06:30:00' => sub {
+            reflesh_table;
             my $entry = $Entry->create(
                 title => 'Sketch Switch',
                 body => 'Donna Iro ga Ima desu-ka?',
