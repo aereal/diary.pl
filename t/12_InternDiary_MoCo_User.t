@@ -11,11 +11,13 @@ use Test::Mock::Guard qw/mock_guard/;
 
 use InternDiary::Database;
 use InternDiary::MoCo::User;
+use InternDiary::MoCo::Entry;
 
 my $User = 'InternDiary::MoCo::User';
+my $Entry = 'InternDiary::MoCo::Entry';
 
 sub reflesh_table {
-    InternDiary::Database->execute("TRUNCATE TABLE " . $_->table) for ($User);
+    InternDiary::Database->execute("TRUNCATE TABLE " . $_->table) for (($User, $Entry));
 }
 
 subtest inheritance => sub {
@@ -68,6 +70,24 @@ subtest created_at => sub {
             is $new_user->created_at->epoch, DateTime->now->epoch;
         };
     };
+};
+
+subtest create_entry => sub {
+    reflesh_table;
+    my $author = $User->create(name => 'aereal');
+
+    can_ok $author, 'create_entry';
+
+    my $before_entries_count = $Entry->count(user_id => $author->id);
+    my $entry_args = {title => 'My First Diary', body => 'Hello World'};
+    $author->create_entry($entry_args);
+
+    my $last_my_entry = $Entry->search(where => {user_id => $author->id}, order => 'created_at DESC', limit => 1)->first;
+
+    isa_ok $last_my_entry, $Entry;
+    is $last_my_entry->title, $entry_args->{'title'};
+    is $last_my_entry->body, $entry_args->{'body'};
+    is $Entry->count(user_id => $author->id), $before_entries_count + 1;
 };
 
 done_testing;
