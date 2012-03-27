@@ -8,6 +8,7 @@ BEGIN {
         use_ok 'InternDiary::MoCo';
         use_ok 'InternDiary::MoCo::User';
         use_ok 'InternDiary::MoCo::Entry';
+        use_ok 'InternDiary::App';
     };
 }
 
