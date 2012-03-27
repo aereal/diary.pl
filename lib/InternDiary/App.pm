@@ -7,4 +7,9 @@ sub new {
     bless {}, $class;
 }
 
+sub register {
+    my ($self, $new_name) = @_;
+    die 'No username given' unless defined $new_name;
+}
+
 1;
