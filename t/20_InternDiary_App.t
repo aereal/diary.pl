@@ -36,6 +36,21 @@ subtest register => sub {
     subtest 'no args given' => sub {
         like exception { $app->register }, qr/No username given/;
     };
+
+    subtest 'username given' => sub {
+        subtest 'it is not registered yet' => sub {
+            reflesh_table;
+
+            my $new_username = 'aereal';
+            $app->register($new_username);
+
+            ok not $User->search->is_empty;
+
+            my $last_user = $User->search(order => 'created_at DESC', limit => 1)->first;
+            isa_ok $last_user, $User;
+            is $last_user->name, $new_username;
+        };
+    };
 };
 
 done_testing;
