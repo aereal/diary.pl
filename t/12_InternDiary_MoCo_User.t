@@ -10,12 +10,14 @@ use Data::Dumper;
 
 use InternDiary::MoCo::User;
 
+my $User = 'InternDiary::MoCo::User';
+
 subtest inheritance => sub {
     ok any { $_ eq 'InternDiary::MoCo' } @InternDiary::MoCo::User::ISA;
 };
 
 subtest table => sub {
-    is 'InternDiary::MoCo::User'->table, 'users';
+    is $User->table, 'users';
 };
 
 done_testing;
