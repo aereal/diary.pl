@@ -20,6 +20,15 @@ sub reflesh_table {
     InternDiary::Database->execute("TRUNCATE TABLE " . $_->table) for (($Entry, $User));
 }
 
+subtest extract_title => sub {
+    my $title = 'Hello My Title';
+    my $body = 'Hello My Body';
+    my $complexed = join "\n\n", ($title, $body);
+    my @extracted = $Entry->extract_title($complexed);
+    is $extracted[0], $title;
+    is $extracted[1], $body;
+};
+
 subtest inheritance => sub {
     ok any { $_ eq 'InternDiary::MoCo' } @InternDiary::MoCo::Entry::ISA;
 };

@@ -11,4 +11,11 @@ sub author {
     InternDiary::MoCo::User->find($self->user_id);
 }
 
+sub extract_title {
+    my ($class, $complexed) = @_;
+    my ($title, @rest) = split "\n\n", $complexed;
+    my $body = join "\n\n", @rest;
+    ($title, $body);
+}
+
 1;
