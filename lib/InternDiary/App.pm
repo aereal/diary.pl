@@ -33,7 +33,7 @@ sub login {
 
 sub list_entries {
     my ($self) = @_;
-    [];
+    $self->current_user->entries->to_a;
 }
 
 sub create_entry {

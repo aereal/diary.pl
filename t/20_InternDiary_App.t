@@ -57,6 +57,13 @@ subtest list_entries => sub {
         ok $author->entries->is_empty;
         is_deeply $app->list_entries, [];
     };
+
+    subtest 'some entries found' => sub {
+        $author->create_entry({title => "Hello! #$_", body => "Written diary for $_ time(s)"})
+            for (1 .. 3);
+        ok not $author->entries->is_empty;
+        is_deeply $app->list_entries, $author->entries->to_a;
+    };
 };
 
 subtest create_entry => sub {
