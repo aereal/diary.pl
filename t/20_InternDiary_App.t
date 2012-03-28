@@ -65,6 +65,26 @@ subtest create_entry => sub {
     is $last_my_entry->body, $body;
 };
 
+subtest update_entry => sub {
+    reflesh_table;
+
+    my $user = $User->create(name => 'aereal');
+    my $app = $App->new;
+
+    can_ok $app, 'update_entry';
+
+    my $old_entry = $Entry->create(title => 'Old My Entry', body => "Lorem Ipsum.\nLorem Ipsum.\nLorem Ipsum.");
+
+    my $new_title = 'New My Entry';
+    my $new_body = "Hello World";
+    my $complexed = join "\n", ($new_title, $new_body);
+    $app->update_entry($old_entry->id => $complexed);
+
+    my $new_entry = $Entry->find(id => $old_entry->id);
+    is $new_entry->title, $new_title;
+    is $new_entry->body, $new_body;
+};
+
 subtest login => sub {
     reflesh_table;
 
