@@ -11,6 +11,7 @@ BEGIN {
         use_ok 'InternDiary::App';
         use_ok 'InternDiary::App::CLI::New';
         use_ok 'InternDiary::App::CLI::List';
+        use_ok 'InternDiary::App::CLI::Edit';
     };
 }
 
