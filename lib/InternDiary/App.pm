@@ -4,6 +4,7 @@ use warnings;
 use InternDiary::MoCo::User;
 use InternDiary::MoCo::Entry;
 use Try::Tiny;
+use DateTime::Format::W3CDTF;
 
 sub new {
     my ($class) = @_;
@@ -32,8 +33,12 @@ sub login {
 }
 
 sub list_entries {
-    my ($self) = @_;
-    $self->current_user->entries->to_a;
+    my ($self, $begin, $end) = @_;
+    if (defined $begin || defined $end) {
+        my ($begin_dt, $end_dt) = map { 'DateTime::Format::W3CDTF'->parse_datetime($_) } grep { defined $_ } ($begin, $end);
+    } else {
+        $self->current_user->entries->to_a;
+    }
 }
 
 sub create_entry {

@@ -63,6 +63,26 @@ subtest list_entries => sub {
             for (1 .. 3);
         ok not $author->entries->is_empty;
         is_deeply $app->list_entries, $author->entries->to_a;
+
+        subtest 'given start of range' => sub {
+            subtest 'given invalid date format' => sub {
+                like exception { $app->list_entries('hoge') }, qr/Invalid W3CDTF datetime string/;
+            };
+
+            subtest 'given valid date format' => sub {
+                lives_ok { $app->list_entries('2011') };
+            };
+        };
+
+        subtest 'given end of range' => sub {
+            subtest 'given invalid date format' => sub {
+                like exception { $app->list_entries(undef, 'hoge') }, qr/Invalid W3CDTF datetime string/;
+            };
+
+            subtest 'given valid date format' => sub {
+                lives_ok { $app->list_entries(undef, '2011') };
+            };
+        };
     };
 };
 
