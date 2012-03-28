@@ -97,6 +97,18 @@ subtest destroy_entry => sub {
         my $missing_entry_id = 123456;
         like exception { $app->destroy_entry($missing_entry_id) }, qr/Entry not found/;
     };
+
+    subtest 'entry is found' => sub {
+        reflesh_table;
+        my $old_entry = $Entry->create(title => 'Hi', body => 'Sushi me', user_id => $author->id);
+        my $before_entries_count = $author->entries->size;
+        ok not $Entry->search(where => {title => $old_entry->title, body => $old_entry->body, user_id => $author->id})->is_empty;
+
+        $app->destroy_entry($old_entry->id);
+
+        is $author->entries->size, $before_entries_count - 1;
+        ok $Entry->search(where => {title => $old_entry->title, body => $old_entry->body, user_id => $author->id})->is_empty;
+    };
 };
 
 subtest login => sub {
