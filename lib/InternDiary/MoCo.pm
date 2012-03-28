@@ -6,6 +6,8 @@ use lib glob "$FindBin::Bin/../module/*/lib";
 use parent 'DBIx::MoCo';
 use DateTime::Format::MySQL;
 
+use InternDiary::Database;
+
 __PACKAGE__->db_object('InternDiary::Database');
 __PACKAGE__->inflate_column(
     created_at => {
