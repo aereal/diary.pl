@@ -33,16 +33,14 @@ sub login {
 
 sub create_entry {
     my ($self, $complexed) = @_;
-    my ($title, @rest) = split "\n", $complexed;
-    my $body = join "\n", @rest;
+    my ($title, $body) = InternDiary::MoCo::Entry->extract_title($complexed);
     $self->current_user->create_entry({title => $title, body => $body});
 }
 
 sub update_entry {
     my ($self, $id, $complexed) = @_;
     my $entry = InternDiary::MoCo::Entry->find(id => $id);
-    my ($title, @rest) = split "\n", $complexed;
-    my $body = join "\n", @rest;
+    my ($title, $body) = InternDiary::MoCo::Entry->extract_title($complexed);
     $entry->update(title => $title, body => $body);
 }
 

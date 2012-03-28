@@ -55,7 +55,7 @@ subtest create_entry => sub {
 
     my $title = 'This is my title';
     my $body = "Hello World\nThese lines are body";
-    my $complexed = join "\n", ($title, $body);
+    my $complexed = join "\n\n", ($title, $body);
 
     $app->create_entry($complexed);
 
@@ -77,7 +77,7 @@ subtest update_entry => sub {
 
     my $new_title = 'New My Entry';
     my $new_body = "Hello World";
-    my $complexed = join "\n", ($new_title, $new_body);
+    my $complexed = join "\n\n", ($new_title, $new_body);
     $app->update_entry($old_entry->id => $complexed);
 
     my $new_entry = $Entry->find(id => $old_entry->id);
