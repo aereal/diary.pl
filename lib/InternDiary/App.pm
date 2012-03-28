@@ -44,4 +44,9 @@ sub update_entry {
     $entry->update(title => $title, body => $body);
 }
 
+sub destroy_entry {
+    my ($self, $id) = @_;
+    die 'Entry not found' unless InternDiary::MoCo::Entry->find($id);
+}
+
 1;

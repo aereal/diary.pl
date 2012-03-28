@@ -85,6 +85,20 @@ subtest update_entry => sub {
     is $new_entry->body, $new_body;
 };
 
+subtest destroy_entry => sub {
+    reflesh_table;
+
+    my $app = $App->new;
+    my $author = $User->create(name => 'aereal');
+
+    can_ok $app, 'destroy_entry';
+
+    subtest 'when given missing entry_id' => sub {
+        my $missing_entry_id = 123456;
+        like exception { $app->destroy_entry($missing_entry_id) }, qr/Entry not found/;
+    };
+};
+
 subtest login => sub {
     reflesh_table;
 
