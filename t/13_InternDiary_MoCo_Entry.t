@@ -8,6 +8,9 @@ use Test::Fatal;
 use List::MoreUtils ':all';
 use Data::Dumper;
 use Test::Mock::Guard qw/mock_guard/;
+use Test::Fatal qw/exception lives_ok/;
+
+sub p($) { warn Dumper shift }
 
 use InternDiary::Database;
 use InternDiary::MoCo::Entry;
@@ -176,6 +179,60 @@ subtest author => sub {
     for (@{$User->columns}) {
         is $author->$_, $entry->author->$_, $_;
     }
+};
+
+subtest search_with_duration => sub {
+    reflesh_table;
+
+    can_ok $Entry, 'search_with_duration';
+
+    subtest 'when no entries found' => sub {
+        ok $Entry->search_with_duration->is_empty;
+    };
+
+    subtest 'some entries found' => sub {
+        reflesh_table;
+        my $author = $User->create(name => 'aereal');
+        $author->create_entry({title => "Hello! #$_", body => "Written diary for $_ time(s)"})
+            for (1 .. 3);
+        ok not $Entry->search_with_duration->is_empty;
+
+        subtest 'given start of range' => sub {
+            subtest 'given invalid date format' => sub {
+                like exception { $Entry->search_with_duration('hoge') }, qr/Invalid W3CDTF datetime string/;
+            };
+
+            subtest 'given valid date format' => sub {
+                reflesh_table;
+                my $author = $User->create(name => 'aereal');
+                $author->create_entry({title => "Happy New Year! $_", body => "Today is new year day of $_", created_at => DateTime->new(year => $_)})
+                    for (2010 .. 2012);
+
+                lives_ok { $Entry->search_with_duration('2011') };
+                my $begin_dt = DateTime->new(year => 2011);
+                ok any { $begin_dt > $_->created_at } @{$Entry->search->to_a};
+                ok all { $begin_dt <= $_->created_at } @{$Entry->search_with_duration($begin_dt)->to_a};
+            };
+        };
+
+        subtest 'given end of range' => sub {
+            subtest 'given invalid date format' => sub {
+                like exception { $Entry->search_with_duration('', 'hoge') }, qr/Invalid W3CDTF datetime string/;
+            };
+
+            subtest 'given valid date format' => sub {
+                reflesh_table;
+                my $author = $User->create(name => 'aereal');
+                $author->create_entry({title => "Happy New Year! $_", body => "Today is new year day of $_", created_at => DateTime->new(year => $_)})
+                    for (2010 .. 2012);
+
+                lives_ok { $Entry->search_with_duration('', '2011') };
+                my $end_dt = DateTime->new(year => 2011);
+                ok any { $end_dt < $_->created_at } @{$Entry->search->to_a};
+                ok all { $end_dt >= $_->created_at } @{$Entry->search_with_duration('', $end_dt)->to_a};
+            };
+        };
+    };
 };
 
 done_testing;

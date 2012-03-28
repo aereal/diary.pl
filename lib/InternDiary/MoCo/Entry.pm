@@ -3,8 +3,25 @@ use strict;
 use warnings;
 use parent 'InternDiary::MoCo';
 use InternDiary::MoCo::User;
+use DateTime::Format::W3CDTF;
+use DateTime::Format::MySQL;
 
 __PACKAGE__->table('entries');
+
+sub search_with_duration {
+    my ($class, $begin, $end, %where) = @_;
+    if (defined $begin || defined $end) {
+        my ($begin_dt, $end_dt) = map { defined $_ && $_ ne '' ? 'DateTime::Format::W3CDTF'->parse_datetime($_) : DateTime->now } ($begin, $end);
+        $class->search(where => {%where, created_at => {
+            -between => [
+                DateTime::Format::MySQL->format_datetime($begin_dt),
+                DateTime::Format::MySQL->format_datetime($end_dt)
+            ]
+        }});
+    } else {
+        $class->search;
+    }
+}
 
 sub author {
     my ($self) = @_;
