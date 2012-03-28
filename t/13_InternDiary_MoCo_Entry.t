@@ -10,6 +10,8 @@ use Data::Dumper;
 use Test::Mock::Guard qw/mock_guard/;
 use Test::Fatal qw/exception lives_ok/;
 
+sub p($) { warn Dumper shift }
+
 use InternDiary::Database;
 use InternDiary::MoCo::Entry;
 use InternDiary::MoCo::User;
@@ -201,7 +203,15 @@ subtest search_with_duration => sub {
             };
 
             subtest 'given valid date format' => sub {
+                reflesh_table;
+                my $author = $User->create(name => 'aereal');
+                $author->create_entry({title => "Happy New Year! $_", body => "Today is new year day of $_", created_at => DateTime->new(year => $_)})
+                    for (2010 .. 2012);
+
                 lives_ok { $Entry->search_with_duration('2011') };
+                my $begin_dt = DateTime->new(year => 2011);
+                ok any { $begin_dt > $_->created_at } @{$Entry->search->to_a};
+                ok all { $begin_dt <= $_->created_at } @{$Entry->search_with_duration($begin_dt)->to_a};
             };
         };
 
@@ -211,7 +221,15 @@ subtest search_with_duration => sub {
             };
 
             subtest 'given valid date format' => sub {
+                reflesh_table;
+                my $author = $User->create(name => 'aereal');
+                $author->create_entry({title => "Happy New Year! $_", body => "Today is new year day of $_", created_at => DateTime->new(year => $_)})
+                    for (2010 .. 2012);
+
                 lives_ok { $Entry->search_with_duration(undef, '2011') };
+                my $end_dt = DateTime->new(year => 2011);
+                ok any { $end_dt < $_->created_at } @{$Entry->search->to_a};
+                ok all { $end_dt >= $_->created_at } @{$Entry->search_with_duration(undef, $end_dt)->to_a};
             };
         };
     };
