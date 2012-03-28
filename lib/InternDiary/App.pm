@@ -32,8 +32,8 @@ sub login {
 }
 
 sub list_entries {
-    my ($self) = @_;
-    $self->current_user->entries->to_a;
+    my ($self, $begin, $end) = @_;
+    InternDiary::MoCo::Entry->search_with_duration($begin, $end, (user_id => $self->current_user->id))->to_a;
 }
 
 sub create_entry {
