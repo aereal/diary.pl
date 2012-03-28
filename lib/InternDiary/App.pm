@@ -31,6 +31,11 @@ sub login {
         die 'Given name is not found';
 }
 
+sub list_entries {
+    my ($self) = @_;
+    [];
+}
+
 sub create_entry {
     my ($self, $complexed) = @_;
     my ($title, $body) = InternDiary::MoCo::Entry->extract_title($complexed);

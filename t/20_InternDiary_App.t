@@ -45,6 +45,20 @@ subtest current_user => sub {
     };
 };
 
+subtest list_entries => sub {
+    reflesh_table;
+
+    my $app = $App->new;
+    can_ok $app, 'list_entries';
+
+    my $author = $User->create(name => 'aereal');
+
+    subtest 'when no entries found' => sub {
+        ok $author->entries->is_empty;
+        is_deeply $app->list_entries, [];
+    };
+};
+
 subtest create_entry => sub {
     reflesh_table;
 
