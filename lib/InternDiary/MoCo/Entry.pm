@@ -11,7 +11,7 @@ __PACKAGE__->table('entries');
 sub search_with_duration {
     my ($class, $begin, $end) = @_;
     if (defined $begin || defined $end) {
-        my ($begin_dt, $end_dt) = map { defined $_ ? 'DateTime::Format::W3CDTF'->parse_datetime($_) : DateTime->now } ($begin, $end);
+        my ($begin_dt, $end_dt) = map { defined $_ && $_ ne '' ? 'DateTime::Format::W3CDTF'->parse_datetime($_) : DateTime->now } ($begin, $end);
         $class->search(where => {created_at => {
             -between => [
                 DateTime::Format::MySQL->format_datetime($begin_dt),

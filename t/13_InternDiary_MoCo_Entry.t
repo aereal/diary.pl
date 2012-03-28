@@ -217,7 +217,7 @@ subtest search_with_duration => sub {
 
         subtest 'given end of range' => sub {
             subtest 'given invalid date format' => sub {
-                like exception { $Entry->search_with_duration(undef, 'hoge') }, qr/Invalid W3CDTF datetime string/;
+                like exception { $Entry->search_with_duration('', 'hoge') }, qr/Invalid W3CDTF datetime string/;
             };
 
             subtest 'given valid date format' => sub {
@@ -226,10 +226,10 @@ subtest search_with_duration => sub {
                 $author->create_entry({title => "Happy New Year! $_", body => "Today is new year day of $_", created_at => DateTime->new(year => $_)})
                     for (2010 .. 2012);
 
-                lives_ok { $Entry->search_with_duration(undef, '2011') };
+                lives_ok { $Entry->search_with_duration('', '2011') };
                 my $end_dt = DateTime->new(year => 2011);
                 ok any { $end_dt < $_->created_at } @{$Entry->search->to_a};
-                ok all { $end_dt >= $_->created_at } @{$Entry->search_with_duration(undef, $end_dt)->to_a};
+                ok all { $end_dt >= $_->created_at } @{$Entry->search_with_duration('', $end_dt)->to_a};
             };
         };
     };
