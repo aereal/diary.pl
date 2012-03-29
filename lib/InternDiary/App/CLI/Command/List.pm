@@ -19,3 +19,10 @@ __END__
 =head1 NAME
 
 InternDiary::App::CLI::Command::List - search your entries
+
+=head1 SYNOPSIS
+
+diary.pl list
+diary.pl list [[begin_datetime]:[end_datetime]]
+
+$begin_datetime and $end_datetime should be valid W3CDTF format

@@ -31,3 +31,7 @@ __END__
 =head1 NAME
 
 InternDiary::App::CLI::Command::Destroy - destroy the entry
+
+=head1 SYNOPSIS
+
+diary.pl destroy {entry_id}

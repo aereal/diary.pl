@@ -25,3 +25,19 @@ __END__
 =head1 NAME
 
 InternDiary::App::CLI::Command::New - create a new entry
+
+=head1 SYNOPSIS
+
+diary.pl new
+
+=head1 DESCRIPTION
+
+=head2 FORMAT
+
+First line is title, then a blank line appears, and the body follows
+
+    (ENTRY.TXT)
+    My New Entry
+
+    Hello World!
+    This is my new entry!

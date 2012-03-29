@@ -22,3 +22,7 @@ __END__
 =head1 NAME
 
 InternDiary::App::CLI::Command::Auth - be authenticated as
+
+=head1 SYNOPSIS
+
+diary.pl auth {user_name}

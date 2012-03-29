@@ -35,3 +35,7 @@ __END__
 =head1 NAME
 
 InternDiary::App::CLI::Command::Edit - edit the entry
+
+=head1 SYNOPSIS
+
+diary.pl edit {entry_id}
