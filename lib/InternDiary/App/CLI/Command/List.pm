@@ -13,3 +13,9 @@ sub run {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+InternDiary::App::CLI::Command::List - search your entries

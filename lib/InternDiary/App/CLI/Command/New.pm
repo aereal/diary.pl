@@ -19,3 +19,9 @@ sub run {
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+InternDiary::App::CLI::Command::New - create a new entry
