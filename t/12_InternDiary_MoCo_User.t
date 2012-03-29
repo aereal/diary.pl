@@ -85,8 +85,8 @@ subtest create_entry => sub {
     my $last_my_entry = $Entry->search(where => {user_id => $author->id}, order => 'created_at DESC', limit => 1)->first;
 
     isa_ok $last_my_entry, $Entry;
-    is $last_my_entry->title, $entry_args->{'title'};
-    is $last_my_entry->body, $entry_args->{'body'};
+    is $last_my_entry->title, $entry_args->{title};
+    is $last_my_entry->body, $entry_args->{body};
     is $Entry->count(user_id => $author->id), $before_entries_count + 1;
 };
 
@@ -102,7 +102,7 @@ subtest entries => sub {
     $author->create_entry($first_entry_args);
 
     ok not $author->entries->is_deeply;
-    ok defined $author->entries->find(sub { $_->title eq $first_entry_args->{'title'} && $_->body eq $first_entry_args->{'body'} });
+    ok defined $author->entries->find(sub { $_->title eq $first_entry_args->{title} && $_->body eq $first_entry_args->{'body'} });
 };
 
 done_testing;
