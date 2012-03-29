@@ -1,7 +1,6 @@
 package t::InternDiary::MoCo::Entry;
 use strict;
 use warnings;
-use parent qw/Test::Class/;
 use Test::More;
 use Test::Name::FromLine;
 use Test::Fatal;
