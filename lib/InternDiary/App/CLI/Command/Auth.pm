@@ -1,14 +1,10 @@
 package InternDiary::App::CLI::Command::Auth;
 use strict;
 use warnings;
-use parent qw/CLI::Dispatch::Command/;
+use parent qw/InternDiary::App::CLI::Base/;
 use Try::Tiny;
-use InternDiary::App;
 
-sub app {
-    my ($self) = @_;
-    $self->{app} ||= InternDiary::App->new;
-}
+__PACKAGE__->auth_required(0);
 
 sub run {
     my ($self, $user_name) = @_;

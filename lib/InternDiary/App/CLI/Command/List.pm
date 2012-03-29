@@ -1,15 +1,8 @@
 package InternDiary::App::CLI::Command::List;
 use strict;
 use warnings;
-use parent qw/CLI::Dispatch::Command/;
+use parent qw/InternDiary::App::CLI::Base/;
 use List::MoreUtils qw/apply/;
-
-use InternDiary::App;
-
-sub app {
-    my ($self) = @_;
-    $self->{app} ||= InternDiary::App->new;
-}
 
 sub run {
     my ($self, @args) = @_;
