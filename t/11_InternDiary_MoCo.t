@@ -8,7 +8,7 @@ use Test::Fatal;
 use InternDiary::Moco;
 
 subtest db_object => sub {
-    is 'InternDiary::MoCo'->db_object, 'InternDiary::Database';
+    is +InternDiary::MoCo->db_object, 'InternDiary::Database';
 };
 
 done_testing;
