@@ -2,7 +2,8 @@ package InternDiary::App::CLI::Auth;
 use strict;
 use warnings;
 use parent qw/CLI::Dispatch::Command/;
-use InternDiary::MoCo::User;
+use Try::Tiny;
+use InternDiary::App;
 
 sub app {
     my ($self) = @_;
@@ -11,12 +12,10 @@ sub app {
 
 sub run {
     my ($self, $user_name) = @_;
-    unless (defined $user_name && $user_name ne '') {
-        die sprintf '$user_name (%s) is not given', $user_name;
-    }
-    my %query = (name => $user_name);
-    if (InternDiary::MoCo::User->find(%query) || InternDiary::MoCo::User->create(%query)) {
-        $self->log(info => "You are authenticated as $user_name");
+    try {
+        $self->app->login($user_name);
+    } catch {
+        $self->app->register($user_name);
     }
 }
 
