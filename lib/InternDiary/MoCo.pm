@@ -2,7 +2,7 @@ package InternDiary::MoCo;
 use strict;
 use warnings;
 use FindBin;
-use lib glob "$FindBin::Bin/../module/*/lib";
+use lib glob "$FindBin::Bin/../modules/*/lib";
 use parent 'DBIx::MoCo';
 use DateTime::Format::MySQL;
 
