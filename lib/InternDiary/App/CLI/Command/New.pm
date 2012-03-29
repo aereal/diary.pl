@@ -1,4 +1,4 @@
-package InternDiary::App::CLI::New;
+package InternDiary::App::CLI::Command::New;
 use strict;
 use warnings;
 use parent qw/CLI::Dispatch::Command/;

@@ -1,4 +1,4 @@
-package InternDiary::App::CLI::Destroy;
+package InternDiary::App::CLI::Command::Destroy;
 use strict;
 use warnings;
 use parent qw/CLI::Dispatch::Command/;
@@ -36,4 +36,4 @@ __END__
 
 =head1 NAME
 
-InternDiary::App::CLI::Destroy - destroy the entry
+InternDiary::App::CLI::Command::Destroy - destroy the entry

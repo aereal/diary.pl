@@ -1,4 +1,4 @@
-package InternDiary::App::CLI::Auth;
+package InternDiary::App::CLI::Command::Auth;
 use strict;
 use warnings;
 use parent qw/CLI::Dispatch::Command/;
@@ -25,4 +25,4 @@ __END__
 
 =head1 NAME
 
-InternDiary::App::CLI::Auth - be authenticated as
+InternDiary::App::CLI::Command::Auth - be authenticated as

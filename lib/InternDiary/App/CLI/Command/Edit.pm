@@ -1,4 +1,4 @@
-package InternDiary::App::CLI::Edit;
+package InternDiary::App::CLI::Command::Edit;
 use strict;
 use warnings;
 use parent qw/CLI::Dispatch::Command/;
@@ -40,4 +40,4 @@ __END__
 
 =head1 NAME
 
-InternDiary::App::CLI::Edit - edit the entry
+InternDiary::App::CLI::Command::Edit - edit the entry
