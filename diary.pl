@@ -7,4 +7,4 @@ use lib 'lib';
 use lib glob "$FindBin::Bin/module/*/lib";
 use CLI::Dispatch;
 
-CLI::Dispatch->run('InternDiary::App::CLI');
+CLI::Dispatch->run('InternDiary::App::CLI::Command');
