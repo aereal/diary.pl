@@ -35,4 +35,9 @@ sub extract_title {
     ($title, $body);
 }
 
+sub formatted_body {
+    my ($self) = @_;
+    join "\n", map { "<p>$_</p>" } split /\n+/, $self->body; # TODO: HTML escape
+}
+
 1;
