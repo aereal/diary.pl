@@ -83,4 +83,19 @@ sub edit : Public {
     );
 }
 
+sub destroy : Public {
+    my ($self, $r) = @_;
+    $r->follow_method;
+}
+
+sub _destory_post {
+    my ($self, $r) = @_;
+    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
+        or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
+
+    $entry->delete;
+
+    $r->res->redirect($r->entries_path);
+}
+
 1;
