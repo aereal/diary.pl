@@ -8,6 +8,17 @@ use DateTime::Format::MySQL;
 
 __PACKAGE__->table('entries');
 
+sub page {
+    my ($class, $page, $options) = @_;
+    $page //= 1;
+    my $per_page_count = $options->{per} || 15; # TODO: デフォルトオプションを適切な場所で定義する
+    $class->search(
+        where => $options->{where} || +{},
+        limit => $per_page_count,
+        offset => $per_page_count * ($page - 1),
+    );
+}
+
 sub search_with_duration {
     my ($class, $begin, $end, %where) = @_;
     if (defined $begin || defined $end) {

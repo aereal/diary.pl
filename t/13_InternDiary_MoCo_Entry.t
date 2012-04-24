@@ -234,4 +234,25 @@ subtest search_with_duration => sub {
     };
 };
 
+subtest page => sub {
+    reflesh_table;
+
+    my $entries_count = 30;
+    my $per_page_count = 15;
+    my $author = $User->create(name => 'aereal');
+    $author->create_entry({title => "Hello! #$_", body => "Written diary for $_ time(s)"})
+        for (1 .. $entries_count);
+    ok not $Entry->page->is_empty;
+
+    subtest without_current_page => sub {
+        cmp_ok $Entry->page->size, '<=', $per_page_count;
+        is $Entry->page->first->id, $Entry->search->first->id;
+    };
+
+    subtest with_current_page => sub {
+        cmp_ok $Entry->page(2)->count, '<=', $per_page_count;
+        is $Entry->page(2)->first->id, $per_page_count + 1;
+    };
+};
+
 done_testing;
