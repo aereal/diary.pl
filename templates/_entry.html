@@ -5,4 +5,9 @@
         </a>
     </h2>
     [% entry.formatted_body %]
+    <div class="actions">
+        <form method="POST" action="[% r.destroy_entry_path(id => entry.id) | html %]">
+            <input type="submit" value="削除" />
+        </form>
+    </div>
 </article>
