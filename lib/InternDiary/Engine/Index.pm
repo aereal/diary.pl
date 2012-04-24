@@ -9,7 +9,7 @@ use InternDiary::MoCo::User;
 sub default : Public {
     my ($self, $r) = @_;
     $r->stash->param(
-        entries => $r->current_user->entries
+        entries => $r->current_user->entries->to_a
     );
 }
 
