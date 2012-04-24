@@ -22,4 +22,13 @@ sub new_ : Public {
     );
 }
 
+sub edit : Public {
+    my ($self, $r) = @_;
+    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
+        or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
+    $r->stash->param(
+        entry => $entry
+    );
+}
+
 1;

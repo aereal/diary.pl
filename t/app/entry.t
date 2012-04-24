@@ -19,6 +19,7 @@ is get('/entry.new_')->code, RC_OK;
 
 subtest invalid_route => sub {
     is get('/entry')->code, RC_NOT_FOUND;
+    is get('/entry.edit')->code, RC_NOT_FOUND;
 };
 
 subtest existent_entry => sub {
@@ -27,12 +28,14 @@ subtest existent_entry => sub {
     my $entry = $Entry->create;
 
     is get('/entry?id=' . $entry->id)->code, RC_OK;
+    is get('/entry.edit?id=' . $entry->id)->code, RC_OK;
 };
 
 subtest missing_entry => sub {
     reflesh_table;
 
     is get('/entry?id=' . 0)->code, RC_NOT_FOUND;
+    is get('/entry.edit?id=', 0)->code, RC_NOT_FOUND;
 };
 
 1;
