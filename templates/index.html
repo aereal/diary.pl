@@ -1,0 +1,8 @@
+<h1>Entries</h1>
+
+[%- FOREACH entry IN entries %]
+<article>
+    <h2>[% entry.title | html %]</h2>
+    [% entry.formatted_body %]
+</article>
+[%- END %]
