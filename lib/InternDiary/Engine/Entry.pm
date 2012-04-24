@@ -14,4 +14,12 @@ sub default : Public {
     );
 }
 
+sub new_ : Public {
+    my ($self, $r) = @_;
+    my $entry = InternDiary::MoCo::Entry->new;
+    $r->stash->param(
+        entry => $entry
+    );
+}
+
 1;

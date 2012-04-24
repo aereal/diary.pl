@@ -15,6 +15,8 @@ sub reflesh_table {
     InternDiary::Database->execute('TRUNCATE TABLE ' . $_->table) for (($Entry));
 }
 
+is get('/entry.new_')->code, RC_OK;
+
 subtest invalid_route => sub {
     is get('/entry')->code, RC_NOT_FOUND;
 };
