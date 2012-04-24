@@ -10,6 +10,7 @@ requires 'HTTP::Server::Simple::PSGI';
 requires 'Cache::MemoryCache';
 requires 'HTTP::MobileAgent';
 requires 'Plack::Middleware::Debug';
+requires 'Plack::Middleware::OAuth';
 
 test_requires 'Test::Name::FromLine';
 test_requires 'Test::Fatal';
