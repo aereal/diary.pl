@@ -1,5 +1,5 @@
 <article>
-    <form method="POST" action="/entry?id=[% entry.id | url | html %]">
+    <form method="POST" action="[% r.entry_path(id => entry.id) | html %]">
         <h1><input id="entry_title" name="entry_title" type="text" value="[% entry.title | html %]" /></h1>
         <textarea id="entry_body" name="entry_body" rows="10" cols="30">[% entry.body | html %]</textarea>
         <p>

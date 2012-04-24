@@ -2,7 +2,11 @@
 
 [%- FOREACH entry IN entries %]
 <article>
-    <h2>[% entry.title | html %]</h2>
+    <h2>
+        <a href="[% r.entry_path(id => entry.id) | html %]">
+            [% entry.title | html %]
+        </a>
+    </h2>
     [% entry.formatted_body %]
 </article>
 [%- END %]
