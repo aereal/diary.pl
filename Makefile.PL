@@ -15,5 +15,7 @@ test_requires 'Test::Name::FromLine';
 test_requires 'Test::Fatal';
 test_requires 'DBIx::RewriteDSN';
 test_requires 'Test::Mock::Guard';
+test_requires 'POE::Sugar::Args';
+test_requires 'File::MimeInfo';
 
 WriteAll;
