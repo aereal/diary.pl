@@ -6,6 +6,7 @@
     </h2>
     [% entry.formatted_body %]
     <div class="actions">
+        [% IF r.logged_in && r.current_user.is_author_of(entry) %]
         <div class="edit">
             <form method="GET" action="[% r.edit_entry_path(id => entry.id) | html %]">
                 <input type="submit" value="編集" />
@@ -16,5 +17,6 @@
                 <input type="submit" value="削除" />
             </form>
         </div>
+        [% END %]
     </div>
 </article>
