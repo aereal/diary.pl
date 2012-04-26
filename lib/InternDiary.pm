@@ -40,6 +40,26 @@ sub has_permission_for {
     $self->logged_in && $self->current_user->is_author_of($entry);
 }
 
+sub paginate {
+    my ($self, $model, $page, %options) = @_;
+    my $per_page_count = $options{per_page} || $self->per_page_count;
+    $page //= 1;
+    $model->search(
+        where => $options{where} || +{},
+        limit => $per_page_count,
+        offset => $per_page_count * ($page - 1),
+    );
+}
+
+sub _has_next_page {
+    my ($self, $model, $page, %options) = @_;
+    $page //= 1;
+    my $per_page_count = $options{per_page} || $self->per_page_count;
+    $model->exists(offset => $per_page_count * $page)
+}
+
+sub per_page_count { 15 }
+
 sub entries_path { '/' }
 
 sub new_entry_path { '/entry.new_' }
