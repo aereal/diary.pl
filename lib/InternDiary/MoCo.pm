@@ -50,4 +50,9 @@ __PACKAGE__->add_trigger(
     }
 );
 
+sub exists {
+    my ($class, %opts) = @_;
+    !$class->search(select => '1', limit => 1, %opts)->is_empty;
+}
+
 1;
