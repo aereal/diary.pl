@@ -17,4 +17,9 @@ sub entries {
     InternDiary::MoCo::Entry->search(where => {user_id => $self->id}, order => 'created_at DESC');
 }
 
+sub is_author_of {
+    my ($self, $entry) = @_;
+    $self->id == $entry->user_id;
+}
+
 1;
