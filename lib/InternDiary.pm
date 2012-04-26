@@ -4,13 +4,35 @@ use warnings;
 use parent qw/Ridge/;
 use URI;
 use URI::QueryParam;
+use Plack::Session;
+
 use InternDiary::MoCo::User;
 
 __PACKAGE__->configure;
 
+sub session {
+    my ($self) = @_;
+    Plack::Session->new($self->req->env);
+}
+
+sub current_auth_provider {
+    my ($self) = @_;
+    $self->session->get('oauth._.provider');
+}
+
+sub current_user_name {
+    my ($self) = @_;
+    $self->session->get('oauth._.user_name');
+}
+
 sub current_user {
     my ($self) = @_;
-    InternDiary::MoCo::User->search->first;
+    InternDiary::MoCo::User->find(name => $self->current_user_name);
+}
+
+sub logged_in {
+    my ($self) = @_;
+    !!($self->current_auth_provider && $self->current_user_name);
 }
 
 sub entries_path { '/' }
