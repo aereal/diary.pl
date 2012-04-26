@@ -5,6 +5,7 @@ use parent qw/Ridge/;
 use URI;
 use URI::QueryParam;
 use Plack::Session;
+use POSIX qw/ceil/;
 
 use InternDiary::MoCo::User;
 
@@ -41,24 +42,31 @@ sub has_permission_for {
 }
 
 sub paginate {
-    my ($self, $model, $page, %options) = @_;
-    my $per_page_count = $options{per_page} || $self->per_page_count;
-    $page //= 1;
+    my ($self, $model, $pager, %options) = @_;
+
     $model->search(
-        where => $options{where} || +{},
-        limit => $per_page_count,
-        offset => $per_page_count * ($page - 1),
+        limit => $pager->{per_page_count},
+        offset => $pager->{per_page} * ($pager->{current_page} - 1),
+        %options
     );
 }
 
-sub _has_next_page {
-    my ($self, $model, $page, %options) = @_;
-    $page //= 1;
-    my $per_page_count = $options{per_page} || $self->per_page_count;
-    $model->exists(offset => $per_page_count * $page)
-}
+sub pager {
+    my ($self, $model, $page, $per_page) = @_;
 
-sub per_page_count { 15 }
+    my %pager = (
+        current_page => $page,
+        total_count => $model->count,
+        per_page_count => $per_page
+    );
+    $pager{total_pages} = ceil($pager{total_count} / $pager{per_page_count});
+    $pager{next_page} = $page + 1
+        unless $page < 0 || $page > $pager{total_pages};
+    $pager{prev_page} = $page - 1
+        unless $page <= 1 || $page >= $pager{total_pages};
+    $pager{pageable} = (defined $pager{next_page}) || (defined $pager{prev_page});
+    \%pager;
+}
 
 sub entries_path { '/' }
 

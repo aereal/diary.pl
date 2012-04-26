@@ -9,8 +9,11 @@ use InternDiary::MoCo::Entry;
 
 sub default : Public {
     my ($self, $r) = @_;
+    my $model = 'InternDiary::MoCo::Entry';
+    my $pager = $r->pager($model, $r->req->param('page') || 1, 1);
     $r->stash->param(
-        entries => InternDiary::MoCo::Entry->page($r->req->param('page'))->to_a,
+        entries => $r->paginate($model, $pager)->to_a,
+        pager => $pager,
     );
 }
 
