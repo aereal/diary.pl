@@ -9,7 +9,6 @@ use InternDiary::MoCo::Entry;
 
 sub default : Public {
     my ($self, $r) = @_;
-    $r->current_user;
     $r->stash->param(
         entries => InternDiary::MoCo::Entry->page($r->req->param('page'))->to_a,
     );
