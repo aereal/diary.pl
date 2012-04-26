@@ -35,6 +35,11 @@ sub logged_in {
     !!($self->current_auth_provider && $self->current_user_name);
 }
 
+sub has_permission_for {
+    my ($self, $entry) = @_;
+    $self->logged_in && $self->current_user->is_author_of($entry);
+}
+
 sub entries_path { '/' }
 
 sub new_entry_path { '/entry.new_' }

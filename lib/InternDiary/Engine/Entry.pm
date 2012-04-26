@@ -57,6 +57,9 @@ sub _update_post {
     my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
 
+    $r->has_permission_for($entry)
+        or Ridge::Exception::RequestError->throw(code => RC_FORBIDDEN);
+
     # $r->req->form(
     #     title => ['NOT_BLANK', 'ASCII'],
     #     body => ['NOT_BLANK', 'ASCII']
@@ -78,6 +81,10 @@ sub edit : Public {
     my ($self, $r) = @_;
     my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
+
+    $r->has_permission_for($entry)
+        or Ridge::Exception::RequestError->throw(code => RC_FORBIDDEN);
+
     $r->stash->param(
         entry => $entry
     );
@@ -92,6 +99,9 @@ sub _destory_post {
     my ($self, $r) = @_;
     my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
+
+    $r->has_permission_for($entry)
+        or Ridge::Exception::RequestError->throw(code => RC_FORBIDDEN);
 
     $entry->delete;
 
