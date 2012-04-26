@@ -22,6 +22,9 @@ sub create : Public {
 sub _create_post {
     my ($self, $r) = @_;
 
+    $r->logged_in
+        or Ridge::Exception::RequestError->throw(code => RC_FORBIDDEN);
+
     # $r->req->form(
     #     title => ['NOT_BLANK', 'ASCII'],
     #     body => ['NOT_BLANK', 'ASCII']
@@ -41,6 +44,10 @@ sub _create_post {
 
 sub new_ : Public {
     my ($self, $r) = @_;
+
+    $r->logged_in
+        or Ridge::Exception::RequestError->throw(code => RC_FORBIDDEN);
+
     my $entry = InternDiary::MoCo::Entry->new;
     $r->stash->param(
         entry => $entry
