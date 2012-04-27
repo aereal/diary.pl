@@ -22,7 +22,7 @@ $ENV{PLACK_ENV} = ($ENV{RIDGE_ENV} =~ /production|staging/) ? 'production' : 'de
 
 builder {
     unless ($ENV{PLACK_ENV} eq 'production') {
-        enable "Plack::Middleware::Debug";
+        # enable "Plack::Middleware::Debug";
         enable "Plack::Middleware::Static",
             path => qr{^/(images|js|css)/},
             root => $root->subdir('static');
