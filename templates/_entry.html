@@ -8,9 +8,7 @@
     <div class="actions">
         [% IF r.has_permission_for(entry) %]
         <div class="edit">
-            <form method="GET" action="[% r.edit_entry_path(id => entry.id) | html %]">
-                <input type="submit" value="編集" />
-            </form>
+            <a href="[% r.edit_entry_path(id => entry.id) | html %]">編集</a>
         </div>
         <div class="destroy">
             <form method="POST" action="[% r.destroy_entry_path(id => entry.id) | html %]">
