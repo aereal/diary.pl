@@ -97,10 +97,9 @@ sub new_entry_path { '/entry.new_' }
 sub create_entry_path { '/entry.create' }
 
 sub entry_path {
-    shift;
-    my $u = URI->new('/entry');
-    $u->query_form_hash(@_);
-    $u->canonical->as_string;
+    my ($self, $param) = @_;
+    my $id = $param->{id};
+    "/entry/$id";
 }
 
 sub edit_entry_path {

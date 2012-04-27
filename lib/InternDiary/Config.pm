@@ -33,8 +33,10 @@ __PACKAGE__->setup({
 
 sub uri_filter {
     my ($uri) = @_;
-    my $path = $uri->path;
-    $uri;
+    if ($uri->path =~ m{^/entry/(\d+)$}) {
+        $uri->path('/entry');
+        $uri->param(id => $1);
+    }
 }
 
 1;

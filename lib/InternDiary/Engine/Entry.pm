@@ -7,7 +7,7 @@ use HTTP::Status;
 
 sub default : Public {
     my ($self, $r) = @_;
-    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
+    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->uri->param('id'))
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
     $r->stash->param(
         entry => $entry,
