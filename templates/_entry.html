@@ -1,9 +1,9 @@
 <article>
-    <h2>
+    <h1>
         <a href="[% r.entry_path(id => entry.id) | html %]">
             [% entry.title | html %]
         </a>
-    </h2>
+    </h1>
     [% entry.formatted_body %]
     <div class="actions">
         [% IF r.has_permission_for(entry) %]

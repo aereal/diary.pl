@@ -1,7 +1,7 @@
 [% WRAPPER _layout.html %]
     <form method="POST" action="[% r.create_entry_path | html %]">
         <article>
-            <h2><input id="entry_title" name="entry_title" type="text" value="[% entry.title | html %]" /></h2>
+            <h1><input id="entry_title" name="entry_title" type="text" value="[% entry.title | html %]" /></h1>
             <textarea id="entry_body" name="entry_body" rows="10" cols="30">[% entry.body | html %]</textarea>
             <p><input type="submit" /></p>
         </article>
