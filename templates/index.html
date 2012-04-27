@@ -1,23 +1,25 @@
-<h1>Entries</h1>
+[% WRAPPER _layout.html %]
+    <h1>Entries</h1>
 
-[% IF r.logged_in %]
-<p>Signed in as [% r.current_user_name %]</p>
-<p><a href="[% r.new_entry_path | html %]">日記を書く</a></p>
-[% ELSE %]
-<p><a href="/auth/twitter">Sign in with Twitter</a></p>
+    [% IF r.logged_in %]
+    <p>Signed in as [% r.current_user_name %]</p>
+    <p><a href="[% r.new_entry_path | html %]">日記を書く</a></p>
+    [% ELSE %]
+    <p><a href="/auth/twitter">Sign in with Twitter</a></p>
+    [% END %]
+
+    [%- FOREACH entry IN entries %]
+        [% INCLUDE '_entry.html' WITH entry = entry %]
+    [%- END %]
+
+    [%- IF pager.item('pageable') %]
+        <p>
+        [%- IF pager.item('prev_page') %]
+            <a href="[% r.entries_path %]?page=[% r.item('prev_pgae') %]">Prev</a>
+        [%- END %]
+        [%- IF pager.item('next_page') %]
+            <a href="[% r.entries_path %]?page=[% pager.item('next_page') %]">Next</a>
+        [%- END %]
+        </p>
+    [%- END %]
 [% END %]
-
-[%- FOREACH entry IN entries %]
-    [% INCLUDE '_entry.html' WITH entry = entry %]
-[%- END %]
-
-[%- IF pager.item('pageable') %]
-    <p>
-    [%- IF pager.item('prev_page') %]
-        <a href="[% r.entries_path %]?page=[% r.item('prev_pgae') %]">Prev</a>
-    [%- END %]
-    [%- IF pager.item('next_page') %]
-        <a href="[% r.entries_path %]?page=[% pager.item('next_page') %]">Next</a>
-    [%- END %]
-    </p>
-[%- END %]

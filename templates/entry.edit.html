@@ -1,10 +1,12 @@
-<article>
-    <form method="POST" action="[% r.update_entry_path(id => entry.id) | html %]">
-        <h1><input id="entry_title" name="entry_title" type="text" value="[% entry.title | html %]" /></h1>
-        <textarea id="entry_body" name="entry_body" rows="10" cols="30">[% entry.body | html %]</textarea>
-        <p>
-            <input id="entry_id" name="entry_id" type="hidden" value="[% entry.id | html %]" />
-            <input type="submit" />
-        </p>
-    </form>
-</article>
+[% WRAPPER _layout.html %]
+    <article>
+        <form method="POST" action="[% r.update_entry_path(id => entry.id) | html %]">
+            <h2><input id="entry_title" name="entry_title" type="text" value="[% entry.title | html %]" /></h2>
+            <textarea id="entry_body" name="entry_body" rows="10" cols="30">[% entry.body | html %]</textarea>
+            <p>
+                <input id="entry_id" name="entry_id" type="hidden" value="[% entry.id | html %]" />
+                <input type="submit" />
+            </p>
+        </form>
+    </article>
+[% END %]
