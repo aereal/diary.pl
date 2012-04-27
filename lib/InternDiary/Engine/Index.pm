@@ -25,7 +25,7 @@ sub default : Public {
     given ($r->req->uri->_action) {
         when (/atom/) {
             my $params = {
-                site_title => $r->config->app_config->{site_title},
+                site_title => $r->title,
                 site_iri => $r->config->app_config->{uri}->as_iri,
                 atom_url => $r->config->app_config->{uri}->path($r->entries_atom_path),
             };

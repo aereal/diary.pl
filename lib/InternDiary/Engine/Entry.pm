@@ -10,7 +10,8 @@ sub default : Public {
     my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
     $r->stash->param(
-        entry => $entry
+        entry => $entry,
+        page_title => $entry->title,
     );
 }
 
@@ -50,7 +51,8 @@ sub new_ : Public {
 
     my $entry = InternDiary::MoCo::Entry->new;
     $r->stash->param(
-        entry => $entry
+        entry => $entry,
+        page_title => '日記を書く',
     );
 }
 
@@ -93,7 +95,8 @@ sub edit : Public {
         or Ridge::Exception::RequestError->throw(code => RC_FORBIDDEN);
 
     $r->stash->param(
-        entry => $entry
+        entry => $entry,
+        page_title => '' . $entry->title . 'を編集する',
     );
 }
 

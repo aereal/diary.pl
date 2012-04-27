@@ -11,6 +11,14 @@ use InternDiary::MoCo::User;
 
 __PACKAGE__->configure;
 
+sub title {
+    my ($self) = @_;
+    my $delimiter = $self->config->app_config->{title_delimiter} || ' - ';
+    my $site_title = $self->config->app_config->{site_title};
+    my $page_title = $self->stash->param('page_title');
+    join $delimiter, grep { defined $_ } ($page_title, $site_title);
+}
+
 sub session {
     my ($self) = @_;
     Plack::Session->new($self->req->env);
