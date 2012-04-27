@@ -3,9 +3,6 @@ use strict;
 use warnings;
 
 use InternDiary::Engine -Base;
-use InternDiary::App;
-use InternDiary::MoCo::User;
-use InternDiary::MoCo::Entry;
 
 sub default : Public {
     my ($self, $r) = @_;
