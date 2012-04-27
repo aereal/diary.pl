@@ -25,6 +25,8 @@ __PACKAGE__->setup({
         default => {
             uri => URI->new('http://local.hatena.ne.jp:3000/'),
             per_page => 15,
+            site_title => 'Intern::Diary',
+            time_zone => 'Asia/Tokyo',
         },
     }
 });
