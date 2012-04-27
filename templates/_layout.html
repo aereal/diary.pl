@@ -13,11 +13,12 @@
         </header>
         <div class="menu">
             <ul>
+                <li><a href="[% r.entries_path | html %]">トップ</a></li><!--
                 [% IF r.logged_in %]
-                <li><a href="https://twitter.com/[% r.current_user.name | html %]">@[% r.current_user.name | html %]</a></li><!--
+                --><li><a href="https://twitter.com/[% r.current_user.name | html %]">@[% r.current_user.name | html %]</a></li><!--
                 --><li><a href="[% r.new_entry_path | html %]">日記を書く</a></li>
                 [% ELSE %]
-                <li><a href="/auth/twitter">Sign in with Twitter</a></li>
+                --><li><a href="/auth/twitter">Sign in with Twitter</a></li>
                 [% END %]
             </ul>
         </div>
