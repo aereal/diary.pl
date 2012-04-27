@@ -60,10 +60,10 @@ sub pager {
         per_page_count => $per_page
     );
     $pager{total_pages} = ceil($pager{total_count} / $pager{per_page_count});
-    $pager{next_page} = $page + 1
-        unless $page < 0 || $page > $pager{total_pages};
-    $pager{prev_page} = $page - 1
-        unless $page <= 1 || $page >= $pager{total_pages};
+    $pager{next_page} = $pager{current_page} + 1
+        if $pager{current_page} > 0 && $pager{current_page} < $pager{total_pages};
+    $pager{prev_page} = $pager{current_page} - 1
+        if $pager{current_page} > 1 && $pager{current_page} <= $pager{total_pages};
     $pager{pageable} = (defined $pager{next_page}) || (defined $pager{prev_page});
     \%pager;
 }
