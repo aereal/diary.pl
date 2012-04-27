@@ -5,8 +5,11 @@
             <textarea id="entry_body" name="entry_body" rows="10" cols="30">[% entry.body | html %]</textarea>
             <p>
                 <input id="entry_id" name="entry_id" type="hidden" value="[% entry.id | html %]" />
-                <input type="submit" />
+                <input type="submit" value="✔ 更新" />
             </p>
         </article>
+    </form>
+    <form method="POST" action="[% r.destroy_entyr_path(id => entry.id) | html %]">
+        <input type="submit" value="✗ 削除" />
     </form>
 [% END %]
