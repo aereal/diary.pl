@@ -11,6 +11,7 @@ requires 'Cache::MemoryCache';
 requires 'HTTP::MobileAgent';
 requires 'Plack::Middleware::Debug';
 requires 'Plack::Middleware::OAuth';
+requires 'Text::Markdown';
 
 test_requires 'Test::Name::FromLine';
 test_requires 'Test::Fatal';
