@@ -4,12 +4,12 @@
     [%- END %]
 
     [%- IF pager.item('pageable') %]
-        <p>
+        <p class="pager">
         [%- IF pager.item('prev_page') %]
-            <a href="[% r.entries_path %]?page=[% r.item('prev_pgae') %]">Prev</a>
+            <a href="[% r.entries_path %]?page=[% r.item('prev_pgae') %]" rel="prev">Prev</a>
         [%- END %]
         [%- IF pager.item('next_page') %]
-            <a href="[% r.entries_path %]?page=[% pager.item('next_page') %]">Next</a>
+            <a href="[% r.entries_path %]?page=[% pager.item('next_page') %]" rel="next">Next</a>
         [%- END %]
         </p>
     [%- END %]
