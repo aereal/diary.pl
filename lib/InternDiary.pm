@@ -54,7 +54,7 @@ sub paginate {
 
     $model->search(
         limit => $pager->{per_page_count},
-        offset => $pager->{per_page} * ($pager->{current_page} - 1),
+        offset => $pager->{per_page_count} * ($pager->{current_page} - 1),
         %options
     );
 }
