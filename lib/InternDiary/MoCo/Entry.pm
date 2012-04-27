@@ -5,6 +5,7 @@ use parent 'InternDiary::MoCo';
 use InternDiary::MoCo::User;
 use DateTime::Format::W3CDTF;
 use DateTime::Format::MySQL;
+use Text::Markdown qw/markdown/;
 
 __PACKAGE__->table('entries');
 
@@ -37,7 +38,7 @@ sub extract_title {
 
 sub formatted_body {
     my ($self) = @_;
-    join "\n", map { "<p>$_</p>" } split /\n+/, $self->body; # TODO: HTML escape
+    markdown($self->body);
 }
 
 1;
