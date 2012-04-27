@@ -2,6 +2,7 @@
 
 [% IF r.logged_in %]
 <p>Signed in as [% r.current_user_name %]</p>
+<p><a href="[% r.new_entry_path | html %]">日記を書く</a></p>
 [% ELSE %]
 <p><a href="/auth/twitter">Sign in with Twitter</a></p>
 [% END %]
