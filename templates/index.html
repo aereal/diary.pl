@@ -1,6 +1,4 @@
 [% WRAPPER _layout.html %]
-    <h1>Entries</h1>
-
     [%- FOREACH entry IN entries %]
         [% INCLUDE '_entry.html' WITH entry = entry %]
     [%- END %]
