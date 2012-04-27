@@ -24,6 +24,7 @@ __PACKAGE__->setup({
     app_config => {
         default => {
             uri => URI->new('http://local.hatena.ne.jp:3000/'),
+            per_page => 15,
         },
     }
 });
