@@ -3,8 +3,26 @@
     <head>
         <meta charset="utf-8" />
         <title>[% r.title | html %]</title>
+        <link rel="stylesheet" href="/css/normalize.css" type="text/css" />
+        <link href="http://fonts.googleapis.com/css?family=Cabin+Sketch" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/css/diary.css" type="text/css" />
     </head>
     <body>
-        [% content %]
+        <header>
+            <h1>[% r.config.app_config.item('site_title') | html %]</h1>
+        </header>
+        <div class="menu">
+            <ul>
+                [% IF r.logged_in %]
+                <li><a href="https://twitter.com/[% r.current_user.name | html %]">@[% r.current_user.name | html %]</a></li><!--
+                --><li><a href="[% r.new_entry_path | html %]">日記を書く</a></li>
+                [% ELSE %]
+                <li><a href="/auth/twitter">Sign in with Twitter</a></li>
+                [% END %]
+            </ul>
+        </div>
+        <div class="content">
+            [% content %]
+        </div>
     </body>
 </html>
