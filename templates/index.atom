@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>[% site_title | html %]</title>
+    <id>[% site_iri %]</id>
+    <link rel="self" href="[% atom_url | html %]" />
+    <updated>[% last_modified_at | html %]</updated>
+
+    [%- FOREACH entry IN entries %]
+    <entry>
+        <author>
+            <name>[% entry.author.name | html %]</name>
+        </author>
+        <link rel="self" href="[% r.entry_url(entry) | html %]" />
+        <id>[% r.entry_iri(entry) | html %]</id>
+        <title>[% entry.title | html %]</title>
+        <published>[% entry.created_at | html %]</published>
+        <updated>[% entry.updated_at | html %]</updated>
+        <content type="html">[% entry.formatted_body | html %]</content>
+    </entry>
+    [%- END %]
+</feed>
