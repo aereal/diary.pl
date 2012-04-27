@@ -11,7 +11,7 @@ sub default : Public {
     my ($self, $r) = @_;
     my $model = 'InternDiary::MoCo::Entry';
     my $pager = $r->pager($model, $r->req->param('page') || 1, $r->config->app_config->{per_page});
-    my $entries = $r->paginate($model, $pager);
+    my $entries = $r->paginate($model, $pager, order => 'created_at DESC');
     $r->stash->param(
         entries => $entries->to_a,
         pager => $pager,
