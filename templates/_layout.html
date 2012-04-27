@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html itemscope itemtype="http://schema.org/Blog">
     <head>
         <meta charset="utf-8" />
         <title>[% r.title | html %]</title>
@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="/css/diary.css" type="text/css" />
     </head>
     <body>
-        <header>
+        <header id="global-header">
             <h1>[% r.config.app_config.item('site_title') | html %]</h1>
         </header>
         <div class="menu">

@@ -1,20 +1,24 @@
-<article>
-    <h1>
-        <a href="[% r.entry_path(id => entry.id) | html %]">
-            [% entry.title | html %]
-        </a>
-    </h1>
-    [% entry.formatted_body %]
-    <div class="actions">
-        [% IF r.has_permission_for(entry) %]
-        <div class="edit">
-            <a href="[% r.edit_entry_path(id => entry.id) | html %]">編集</a>
+<article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPosts">
+    <header>
+        <h1 itemprop="name">
+            <a href="[% r.entry_path(id => entry.id) | html %]" itemprop="url">
+                [% entry.title | html %]
+            </a>
+        </h1>
+        <div class="actions">
+            [% IF r.has_permission_for(entry) %]
+            <div class="edit">
+                <a href="[% r.edit_entry_path(id => entry.id) | html %]">編集</a>
+            </div>
+            <!--div class="destroy">
+                <form method="POST" action="[% r.destroy_entry_path(id => entry.id) | html %]">
+                    <input type="submit" value="削除" />
+                </form>
+            </div-->
+            [% END %]
         </div>
-        <div class="destroy">
-            <form method="POST" action="[% r.destroy_entry_path(id => entry.id) | html %]">
-                <input type="submit" value="削除" />
-            </form>
-        </div>
-        [% END %]
+    </header>
+    <div class="body" itemprop="articleBody">
+        [% entry.formatted_body %]
     </div>
 </article>
