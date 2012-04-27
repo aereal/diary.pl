@@ -5,18 +5,18 @@
                 [% entry.title | html %]
             </a>
         </h1>
-        <div class="actions">
-            [% IF r.has_permission_for(entry) %]
-            <div class="edit">
-                <a href="[% r.edit_entry_path(id => entry.id) | html %]">編集</a>
-            </div>
-            <!--div class="destroy">
-                <form method="POST" action="[% r.destroy_entry_path(id => entry.id) | html %]">
-                    <input type="submit" value="削除" />
-                </form>
-            </div-->
-            [% END %]
-        </div>
+        <p class="metadata">
+            <time datetime="[% entry.created_at | html %]" pubdate itemprop="datePublished">
+                [% entry.created_at.strftime('%H:%M') | html %]
+            </time>
+        </p>
+        [% IF r.has_permission_for(entry) %]
+            <p class="actions">
+                <span class="edit">
+                    <a href="[% r.edit_entry_path(id => entry.id) | html %]" title="編集">✎</a>
+                </span>
+            </p>
+        [% END %]
     </header>
     <div class="body" itemprop="articleBody">
         [% entry.formatted_body %]
