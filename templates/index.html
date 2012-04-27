@@ -9,3 +9,14 @@
 [%- FOREACH entry IN entries %]
     [% INCLUDE '_entry.html' WITH entry = entry %]
 [%- END %]
+
+[%- IF pager.item('pageable') %]
+    <p>
+    [%- IF pager.item('prev_page') %]
+        <a href="[% r.entries_path %]?page=[% r.item('prev_pgae') %]">Prev</a>
+    [%- END %]
+    [%- IF pager.item('next_page') %]
+        <a href="[% r.entries_path %]?page=[% pager.item('next_page') %]">Next</a>
+    [%- END %]
+    </p>
+[%- END %]
