@@ -68,7 +68,21 @@ sub pager {
     \%pager;
 }
 
+sub entry_iri {
+    my ($self, $entry) = @_;
+    $self->entry_url($entry)->as_iri;
+}
+
+sub entry_url {
+    my ($self, $entry) = @_;
+    my $u = $self->config->app_config->{uri};
+    $u->path($self->entry_path($entry));
+    $u;
+}
+
 sub entries_path { '/' }
+
+sub entries_atom_path { '/index.atom' }
 
 sub new_entry_path { '/entry.new_' }
 
