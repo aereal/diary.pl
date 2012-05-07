@@ -23,7 +23,22 @@ Paginator = {
     var self;
     self = this;
     return this.fetchJSON(this.getNextPageNumber(), function(pager, entries) {
-      $.each(entries, self.appendArticle);
+      $.each(entries, function(idx, article) {
+        return $('<article/>').attr({
+          itemscope: true,
+          itemtype: 'http://schema.org/BlogPosting',
+          itemprop: 'blogPosts'
+        }).append($('<header/>').append($('<h1/>').append($('<a/>').attr({
+          itemprop: 'url',
+          href: "/entry/" + article.id
+        }).text(article.title)), $('<p/>').addClass('metadata').append($('<time/>').attr({
+          pubdate: true,
+          itemprop: 'datePublished',
+          datetime: article.created_at
+        }).text(article.created_at))), $('<div/>').addClass('body').attr({
+          itemprop: 'articleBody'
+        }).append(article.formatted_body)).insertBefore(self.pager());
+      });
       if (pager.next_page != null) {
         self.nextPagerElement().detach();
       }
@@ -31,22 +46,6 @@ Paginator = {
         return self.prevPagerElement().detach();
       }
     });
-  },
-  appendArticle: function(idx, article) {
-    return $('<article/>').attr({
-      itemscope: true,
-      itemtype: 'http://schema.org/BlogPosting',
-      itemprop: 'blogPosts'
-    }).append($('<header/>').append($('<h1/>').append($('<a/>').attr({
-      itemprop: 'url',
-      href: "/entry/" + article.id
-    }).text(article.title)), $('<p/>').addClass('metadata').append($('<time/>').attr({
-      pubdate: true,
-      itemprop: 'datePublished',
-      datetime: article.created_at
-    }).text(article.created_at))), $('<div/>').addClass('body').attr({
-      itemprop: 'articleBody'
-    }).append(article.formatted_body)).insertBefore(this.pager());
   },
   getNextPageNumber: function() {
     return parseInt(this.nextPagerElement().uri().search(true).page);
