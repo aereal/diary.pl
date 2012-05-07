@@ -41,4 +41,13 @@ sub formatted_body {
     markdown($self->body);
 }
 
+sub TO_JSON {
+    my ($self) = @_;
+    my $h = {};
+    $h->{$_} = $self->$_ for qw/id title body user_id/;
+    $h->{created_at} = DateTime::Format::W3CDTF->format_datetime($self->created_at);
+    $h->{updated_at} = DateTime::Format::W3CDTF->format_datetime($self->updated_at);
+    $h;
+}
+
 1;
