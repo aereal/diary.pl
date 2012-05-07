@@ -4,6 +4,7 @@ use warnings;
 use 5.010;
 use DateTime;
 use DateTime::Format::W3CDTF;
+use JSON::XS qw//;
 
 use InternDiary::Engine -Base;
 
@@ -39,6 +40,16 @@ sub default : Public {
             $r->stash->param(%$params);
         }
     }
+}
+
+sub api : Public {
+    my ($self, $r) = @_;
+    my $model = 'InternDiary::MoCo::Entry';
+    my $pager = $r->pager($model, $r->req->param('page') || 1, $r->config->app_config->{per_page});
+    my $entries = $r->paginate($model, $pager, order => 'created_at DESC');
+    my $serializer = JSON::XS->new->allow_blessed->latin1;
+    $r->res->content_type('application/json');
+    $r->res->content($serializer->encode({entries => $entries->map(sub { $_->TO_JSON })->to_a}));
 }
 
 1;
