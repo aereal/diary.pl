@@ -5,12 +5,14 @@ Paginator =
     pager: ->
         if !@_pager then @_pager = $(@pagerSelector)
         @_pager
+
     fetchJSON: (pageNum, callback) ->
         $.getJSON "/index.api?page=#{pageNum}", (data) ->
             callback(data.pager, data.entries)
-    pagerize: (pageNum) ->
+
+    pagerize: ->
         self = this
-        @fetchJSON pageNum, (pager, entries) ->
+        @fetchJSON @getNextPageNumber(), (pager, entries) ->
             $.each(entries, self.appendArticle)
             if pager.next_page?
                 self.nextPagerElement().detach()
@@ -27,3 +29,6 @@ Paginator =
                     $('<time/>').attr(pubdate: true, itemprop: 'datePublished', datetime: article.created_at).text(article.created_at)))
             $('<div/>').addClass('body').attr(itemprop: 'articleBody').append(article.formatted_body)
         ).insertBefore(@pager())
+
+    getNextPageNumber: ->
+        parseInt @nextPagerElement().uri().search(true).page
