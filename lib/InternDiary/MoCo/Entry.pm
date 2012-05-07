@@ -44,7 +44,7 @@ sub formatted_body {
 sub TO_JSON {
     my ($self) = @_;
     my $h = {};
-    $h->{$_} = $self->$_ for qw/id title body user_id/;
+    $h->{$_} = $self->$_ for qw/id title body user_id formatted_body/;
     $h->{created_at} = DateTime::Format::W3CDTF->format_datetime($self->created_at);
     $h->{updated_at} = DateTime::Format::W3CDTF->format_datetime($self->updated_at);
     $h;
