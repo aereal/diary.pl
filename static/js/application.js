@@ -50,5 +50,14 @@ Paginator = {
   },
   getNextPageNumber: function() {
     return parseInt(this.nextPagerElement().uri().search(true).page);
+  },
+  hasNextPage: function() {
+    return this.nextPagerElement().length !== 0;
+  },
+  hasPrevPage: function() {
+    return this.prevPagerElement().length !== 0;
+  },
+  pageable: function() {
+    return this.hasNextPage() || this.hasPrevPage();
   }
 };

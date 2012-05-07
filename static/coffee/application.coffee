@@ -32,3 +32,12 @@ Paginator =
 
     getNextPageNumber: ->
         parseInt @nextPagerElement().uri().search(true).page
+
+    hasNextPage: ->
+        @nextPagerElement().length != 0
+
+    hasPrevPage: ->
+        @prevPagerElement().length != 0
+
+    pageable: ->
+        @hasNextPage() || @hasPrevPage()
