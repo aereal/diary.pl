@@ -49,7 +49,7 @@ sub api : Public {
     my $entries = $r->paginate($model, $pager, order => 'created_at DESC');
     my $serializer = JSON::XS->new->allow_blessed->latin1;
     $r->res->content_type('application/json');
-    $r->res->content($serializer->encode({entries => $entries->map(sub { $_->TO_JSON })->to_a}));
+    $r->res->content($serializer->encode({pager => $pager, entries => $entries->map(sub { $_->TO_JSON })->to_a}));
 }
 
 1;
