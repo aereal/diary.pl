@@ -23,11 +23,8 @@ Paginator =
                     $('<div/>').addClass('body').attr(itemprop: 'articleBody').append(article.formatted_body)
                 ).insertBefore(self.pager())
 
-            if pager.next_page?
+            unless pager.next_page?
                 self.nextPagerElement().detach()
-
-            if pager.prev_page?
-                self.prevPagerElement().detach()
 
     getNextPageNumber: ->
         parseInt @nextPagerElement().uri().search(true).page

@@ -39,11 +39,8 @@ Paginator = {
           itemprop: 'articleBody'
         }).append(article.formatted_body)).insertBefore(self.pager());
       });
-      if (pager.next_page != null) {
-        self.nextPagerElement().detach();
-      }
-      if (pager.prev_page != null) {
-        return self.prevPagerElement().detach();
+      if (pager.next_page == null) {
+        return self.nextPagerElement().detach();
       }
     });
   },
