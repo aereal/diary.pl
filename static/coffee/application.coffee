@@ -3,7 +3,7 @@ Paginator =
     nextPagerElement: -> $('p.pager > a[rel=next]')
     prevPagerElement: -> $('p.pager > a[rel=prev]')
     pager: ->
-        if !@_pager then @_pager = $(@pagerSelector)
+        if not @_pager? then @_pager = $(@pagerSelector)
         @_pager
 
     fetchJSON: (pageNum, callback) ->

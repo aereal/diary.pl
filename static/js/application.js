@@ -9,7 +9,7 @@ Paginator = {
     return $('p.pager > a[rel=prev]');
   },
   pager: function() {
-    if (!this._pager) {
+    if (!(this._pager != null)) {
       this._pager = $(this.pagerSelector);
     }
     return this._pager;
