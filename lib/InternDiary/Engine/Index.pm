@@ -48,6 +48,9 @@ sub api : Public {
     my $pager = $r->pager($model, $r->req->param('page') || 1, $r->config->app_config->{per_page});
     my $entries = $r->paginate($model, $pager, order => 'created_at DESC');
     my $serializer = JSON::XS->new->allow_blessed->latin1;
+    $pager->{$_} += 0 for grep { defined $pager->{$_} }
+        qw/next_page prev_page current_page per_page_count total_count total_pages/;
+    $pager->{pageable} = $pager->{pageable} ? JSON::XS::true : JSON::XS::false;
     $r->res->content_type('application/json');
     $r->res->content($serializer->encode({pager => $pager, entries => $entries->map(sub { $_->TO_JSON })->to_a}));
 }
