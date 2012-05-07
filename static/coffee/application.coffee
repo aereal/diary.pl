@@ -14,12 +14,14 @@ Paginator =
         self = this
         @fetchJSON @getNextPageNumber(), (pager, entries) ->
             $.each entries, (idx, article) ->
+                created_at = new Date article.created_at
+                timestamp = "#{created_at.getHours()}:#{created_at.getMinutes()}"
                 $('<article/>').attr(itemscope: true, itemtype: 'http://schema.org/BlogPosting', itemprop: 'blogPosts').append(
                     $('<header/>').append(
                         $('<h1/>').append(
                             $('<a/>').attr(itemprop: 'url', href: "/entry/#{article.id}").text(article.title))
                         $('<p/>').addClass('metadata').append(
-                            $('<time/>').attr(pubdate: true, itemprop: 'datePublished', datetime: article.created_at).text(article.created_at)))
+                            $('<time/>').attr(pubdate: true, itemprop: 'datePublished', datetime: article.created_at).text(timestamp)))
                     $('<div/>').addClass('body').attr(itemprop: 'articleBody').append(article.formatted_body)
                 ).insertBefore(self.pager())
 

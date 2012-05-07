@@ -24,6 +24,9 @@ Paginator = {
     self = this;
     return this.fetchJSON(this.getNextPageNumber(), function(pager, entries) {
       $.each(entries, function(idx, article) {
+        var created_at, timestamp;
+        created_at = new Date(article.created_at);
+        timestamp = "" + (created_at.getHours()) + ":" + (created_at.getMinutes());
         return $('<article/>').attr({
           itemscope: true,
           itemtype: 'http://schema.org/BlogPosting',
@@ -35,7 +38,7 @@ Paginator = {
           pubdate: true,
           itemprop: 'datePublished',
           datetime: article.created_at
-        }).text(article.created_at))), $('<div/>').addClass('body').attr({
+        }).text(timestamp))), $('<div/>').addClass('body').attr({
           itemprop: 'articleBody'
         }).append(article.formatted_body)).insertBefore(self.pager());
       });
