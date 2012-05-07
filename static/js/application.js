@@ -1,6 +1,8 @@
 var Paginator;
 
 Paginator = {
+  THRESHOLD: 70.0,
+  root: $('*:root'),
   pagerSelector: 'p.pager',
   nextPagerElement: function() {
     return $('p.pager > a[rel=next]');
@@ -23,7 +25,14 @@ Paginator = {
     var self;
     self = this;
     return this.fetchJSON(this.getNextPageNumber(), function(pager, entries) {
-      $.each(entries, function(idx, article) {
+      if (pager.next_page != null) {
+        self.nextPagerElement().uri().search({
+          page: pager.next_page
+        });
+      } else {
+        self.nextPagerElement().detach();
+      }
+      return $.each(entries, function(idx, article) {
         var created_at, timestamp;
         created_at = new Date(article.created_at);
         timestamp = "" + (created_at.getHours()) + ":" + (created_at.getMinutes());
@@ -42,9 +51,6 @@ Paginator = {
           itemprop: 'articleBody'
         }).append(article.formatted_body)).insertBefore(self.pager());
       });
-      if (pager.next_page == null) {
-        return self.nextPagerElement().detach();
-      }
     });
   },
   getNextPageNumber: function() {
@@ -58,5 +64,15 @@ Paginator = {
   },
   pageable: function() {
     return this.hasNextPage() || this.hasPrevPage();
+  },
+  positionRatio: function() {
+    return -this.root.position().top / this.root.height();
   }
 };
+
+$(document).scroll(function(e) {
+  if (Paginator.hasNextPage() && Paginator.positionRatio() >= (Paginator.THRESHOLD / 100)) {
+    console.log("Overed " + Paginator.THRESHOLD + "%, automatically load next page!");
+    return Paginator.pagerize();
+  }
+});
