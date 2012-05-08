@@ -1,6 +1,4 @@
 Paginator =
-    THRESHOLD: 70.0
-    root: $('*:root')
     pagerSelector: 'p.pager'
     nextPagerElement: -> $('p.pager > a[rel=next]')
     prevPagerElement: -> $('p.pager > a[rel=prev]')
@@ -44,12 +42,8 @@ Paginator =
     pageable: ->
         @hasNextPage() || @hasPrevPage()
 
-    positionRatio: ->
-        -@root.position().top / @root.height()
-
-$(document).scroll (e) ->
-    # FIXME: ぐるぐるスクロールさせないとなぜか反応してくれない
-    # TODO: setTimeoutする ドキュメントのTHRESHOLD%に達してもブロックしないので、複数回、ノードの追加が起きることがあるのを防ぐため
-    if Paginator.hasNextPage() and Paginator.positionRatio() >= (Paginator.THRESHOLD / 100)
-        console.log("Overed #{Paginator.THRESHOLD}%, automatically load next page!")
-        Paginator.pagerize()
+$ ->
+    if Paginator.hasNextPage()
+        $(Paginator.nextPagerElement()).click (e) ->
+            e.preventDefault()
+            Paginator.pagerize()

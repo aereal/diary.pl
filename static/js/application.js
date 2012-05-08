@@ -1,8 +1,6 @@
 var Paginator;
 
 Paginator = {
-  THRESHOLD: 70.0,
-  root: $('*:root'),
   pagerSelector: 'p.pager',
   nextPagerElement: function() {
     return $('p.pager > a[rel=next]');
@@ -64,15 +62,14 @@ Paginator = {
   },
   pageable: function() {
     return this.hasNextPage() || this.hasPrevPage();
-  },
-  positionRatio: function() {
-    return -this.root.position().top / this.root.height();
   }
 };
 
-$(document).scroll(function(e) {
-  if (Paginator.hasNextPage() && Paginator.positionRatio() >= (Paginator.THRESHOLD / 100)) {
-    console.log("Overed " + Paginator.THRESHOLD + "%, automatically load next page!");
-    return Paginator.pagerize();
+$(function() {
+  if (Paginator.hasNextPage()) {
+    return $(Paginator.nextPagerElement()).click(function(e) {
+      e.preventDefault();
+      return Paginator.pagerize();
+    });
   }
 });
