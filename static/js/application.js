@@ -20,9 +20,10 @@ Paginator = {
     });
   },
   pagerize: function() {
-    var self;
+    var next_page_num, self;
     self = this;
-    return this.fetchJSON(this.getNextPageNumber(), function(pager, entries) {
+    next_page_num = this.getNextPageNumber();
+    return this.fetchJSON(next_page_num, function(pager, entries) {
       if (pager.next_page != null) {
         self.nextPagerElement().uri().search({
           page: pager.next_page

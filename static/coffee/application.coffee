@@ -12,7 +12,10 @@ Paginator =
 
     pagerize: ->
         self = this
-        @fetchJSON @getNextPageNumber(), (pager, entries) ->
+        next_page_num = @getNextPageNumber()
+        @fetchJSON next_page_num, (pager, entries) ->
+            # history.pushState(null, document.title, "/?page=#{next_page_num}")
+
             if pager.next_page?
                 self.nextPagerElement().uri().search(page: pager.next_page)
             else
