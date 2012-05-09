@@ -1,6 +1,6 @@
-<article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPosts">
+<article itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPosts" data-entry-id="[% entry.id | html %]">
     <header>
-        <h1 itemprop="name">
+        <h1 itemprop="name" data-entry-title="[% entry.title | html %]">
             <a href="[% r.entry_path(id => entry.id) | html %]" itemprop="url">
                 [% entry.title | html %]
             </a>
@@ -18,7 +18,7 @@
             </p>
         [% END %]
     </header>
-    <div class="body" itemprop="articleBody">
+    <div class="body" itemprop="articleBody" data-raw-body="[% entry.body | html %]">
         [% entry.formatted_body %]
     </div>
 </article>
