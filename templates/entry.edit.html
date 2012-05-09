@@ -9,7 +9,7 @@
             </p>
         </article>
     </form>
-    <form method="POST" action="[% r.destroy_entyr_path(id => entry.id) | html %]">
+    <form method="POST" action="[% r.destroy_entry_path(id => entry.id) | html %]">
         <input type="submit" value="✗ 削除" />
     </form>
 [% END %]
