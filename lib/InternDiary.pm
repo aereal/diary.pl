@@ -97,8 +97,8 @@ sub new_entry_path { '/entry.new_' }
 sub create_entry_path { '/entry.create' }
 
 sub entry_path {
-    my ($self, $param) = @_;
-    my $id = $param->{id};
+    my ($self, %param) = @_;
+    my $id = $param{id};
     "/entry/$id";
 }
 
