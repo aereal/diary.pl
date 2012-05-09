@@ -24,7 +24,7 @@ builder {
     unless ($ENV{PLACK_ENV} eq 'production') {
         # enable "Plack::Middleware::Debug";
         enable "Plack::Middleware::Static",
-            path => qr{^/(images|js|css)/},
+            path => qr{^/(?:(?:images|js|css)/|favicon\.ico)},
             root => $root->subdir('static');
     }
 
