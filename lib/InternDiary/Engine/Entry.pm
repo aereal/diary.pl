@@ -4,6 +4,7 @@ use warnings;
 use InternDiary::Engine -Base;
 use InternDiary::MoCo::Entry;
 use HTTP::Status;
+use JSON::XS;
 
 sub default : Public {
     my ($self, $r) = @_;
@@ -82,7 +83,13 @@ sub _update_post {
             body => $r->req->param('entry_body'),
         );
 
-        $r->res->redirect($r->entry_path(id => $entry->id));
+        if ($r->req->env->{'X-Requested-With'} eq 'XMLHttpRequest') {
+            # TODO: 正しいステータスコードを返す Createdみたいな
+            $r->res->content_type('application/json');
+            $r->res->content(encode_json({url => $r->entry_path(id => $entry->id)}));
+        } else {
+            $r->res->redirect($r->entry_path(id => $entry->id));
+        }
     }
 }
 
