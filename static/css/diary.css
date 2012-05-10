@@ -9,6 +9,40 @@ body {
     color: #333;
 }
 
+p.notice,
+p.error {
+    padding: 0.5em;
+    border: solid 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+p.notice::before,
+p.error::before {
+    margin-right: 0.5em;
+}
+
+p.notice {
+    border-color: #c7c689;
+    background-color: #fbfbe7;
+}
+
+p.notice::before {
+    content: '\2714';
+    color: #c7c689;
+}
+
+p.error {
+    border-color: #c78989;
+    background-color: #fbe7e7;
+}
+
+p.error::before {
+    content: '\2717';
+    color: #c78989;
+}
+
 p.pager {
     text-align: center;
 }
