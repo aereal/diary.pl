@@ -11,6 +11,11 @@ use InternDiary::MoCo::User;
 
 __PACKAGE__->configure;
 
+sub is_xhr {
+    my ($self) = @_;
+    ($self->req->env->{HTTP_X_REQUESTED_WITH} || '') eq 'XMLHttpRequest';
+}
+
 sub title {
     my ($self) = @_;
     my $delimiter = $self->config->app_config->{title_delimiter} || ' - ';
