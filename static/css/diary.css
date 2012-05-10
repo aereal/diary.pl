@@ -231,12 +231,14 @@ header .actions {
     top: 0;
     left: 0.5%;
     font-size: 200%;
-    visibility: hidden;
+    /*visibility: hidden;*/
 }
 
+/*
 article:hover > header .actions {
     visibility: visible;
 }
+*/
 
 article .body {
     margin-top: 3em;
