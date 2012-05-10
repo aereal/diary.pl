@@ -56,9 +56,11 @@ Editor = (function() {
     }).done(function(res) {
       console.log('Success');
       self.replaceArticle(res.title, res.body, res.formattedBody);
-      return self.cancel();
+      self.cancel();
+      return $('<p/>').addClass('notice').text('更新しました').insertBefore(self.article.find('header')).delay(1000).fadeOut(600);
     }).fail(function() {
-      return console.log('Fail');
+      console.log('Fail');
+      return $('<p/>').addClass('error').text('更新に失敗しました').insertBefore(self.article.find('header')).delay(1000).fadeOut(600);
     }).always(function() {
       return console.log('Completed');
     });

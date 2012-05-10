@@ -34,8 +34,10 @@ class Editor
             console.log('Success')
             self.replaceArticle(res.title, res.body, res.formattedBody)
             self.cancel()
+            $('<p/>').addClass('notice').text('更新しました').insertBefore(self.article.find('header')).delay(1000).fadeOut(600)
         ).fail(->
             console.log('Fail')
+            $('<p/>').addClass('error').text('更新に失敗しました').insertBefore(self.article.find('header')).delay(1000).fadeOut(600)
         ).always(->
             console.log('Completed')
         )
