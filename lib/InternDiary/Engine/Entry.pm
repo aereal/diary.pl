@@ -78,15 +78,18 @@ sub _update_post {
     if ($r->req->form->has_error) {
         # TODO
     } else {
-        $entry->update(
-            title => $r->req->param('entry_title'),
-            body => $r->req->param('entry_body'),
-        );
+        $entry->title($r->req->param('entry_title'));
+        $entry->body($r->req->param('entry_body'));
+        $entry->save;
 
-        if ($r->req->env->{'X-Requested-With'} eq 'XMLHttpRequest') {
-            # TODO: 正しいステータスコードを返す Createdみたいな
+        if ($r->req->env->{HTTP_X_REQUESTED_WITH} eq 'XMLHttpRequest') {
+            my $content = {
+                title => $entry->title,
+                body => $entry->body,
+                formattedBody => $entry->formatted_body,
+            };
             $r->res->content_type('application/json');
-            $r->res->content(encode_json({url => $r->entry_path(id => $entry->id)}));
+            $r->res->content(JSON::XS->new->latin1->encode($content));
         } else {
             $r->res->redirect($r->entry_path(id => $entry->id));
         }
