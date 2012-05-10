@@ -36,8 +36,8 @@ sub _create_post {
         # TODO
     } else {
         my $entry = $r->current_user->create_entry({
-            title => $r->req->param('entry_title'),
-            body => $r->req->param('entry_body'),
+            title => $r->req->parameters->{entry_title},
+            body => $r->req->parameters->{entry_body},
         });
 
         $r->res->redirect($r->entry_path(id => $entry->id));
@@ -64,7 +64,7 @@ sub update : Public {
 
 sub _update_post {
     my ($self, $r) = @_;
-    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
+    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->parameters->{id})
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
 
     $r->has_permission_for($entry)
@@ -78,8 +78,8 @@ sub _update_post {
     if ($r->req->form->has_error) {
         # TODO
     } else {
-        $entry->title($r->req->param('entry_title'));
-        $entry->body($r->req->param('entry_body'));
+        $entry->title($r->req->parameters->{entry_title});
+        $entry->body($r->req->parameters{entry_body});
         $entry->save;
 
         if ($r->req->env->{HTTP_X_REQUESTED_WITH} eq 'XMLHttpRequest') {
@@ -98,7 +98,7 @@ sub _update_post {
 
 sub edit : Public {
     my ($self, $r) = @_;
-    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
+    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->parameters->{id})
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
 
     $r->has_permission_for($entry)
@@ -117,7 +117,7 @@ sub destroy : Public {
 
 sub _destory_post {
     my ($self, $r) = @_;
-    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->param('id'))
+    my $entry = InternDiary::MoCo::Entry->retrieve($r->req->parameters->{id})
         or Ridge::Exception::RequestError->throw(code => RC_NOT_FOUND);
 
     $r->has_permission_for($entry)
